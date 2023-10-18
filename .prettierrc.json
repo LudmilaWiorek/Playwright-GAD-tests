@@ -2,5 +2,7 @@
   "singleQuote": true,
   "endOfLine": "auto",
   "tabWidth": 2,
-  "semi": false
+  "semi": false,
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }
