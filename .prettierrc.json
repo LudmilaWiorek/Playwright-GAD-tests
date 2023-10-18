@@ -3,6 +3,7 @@
   "endOfLine": "auto",
   "tabWidth": 2,
   "semi": false,
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }
