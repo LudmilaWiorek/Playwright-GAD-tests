@@ -5,7 +5,12 @@
   "main": "index.js",
   "scripts": {
     "format": "npx prettier --write .",
-    "lint": "npx eslint . --ext .ts --max-warnings=0"
+    "format:check": "npx prettier . --check \"!**.ts\"",
+    "lint": "npx eslint . --ext .ts --max-warnings=0",
+    "test": "npx playwright test",
+    "test:headed": "npm run test -- --headed",
+    "test:ui": "npm run test -- --ui",
+    "show-report": "npx playwright show-report"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +25,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-playwright": "^0.16.0",
     "eslint-plugin-prettier": "^5.0.1",
-    "husky": "^8.0.3", 
+    "husky": "^8.0.3",
     "prettier": "3.0.3"
   }
 }
