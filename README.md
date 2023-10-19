@@ -1,5 +1,7 @@
 # Tests for GAD application
 
+Piszemy: czego dotyczy nasz kod, nasza praca; potem - jak zacząć pracę z projektem, wymagane narzędzia oraz te opcjonalne, najważniejsze skrypty
+
 ## GAD Application
 
 Repository: https://github.com/jaktestowac/gad-gui-api-demo
