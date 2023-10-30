@@ -31,4 +31,20 @@ Run all tests:
 npx playwright test
 ```
 
+Run all test with tags:
+
+```
+npx playwright test --grep @GAD-R01-01
+```
+
+Run all test without tag:
+
+```
+npx playwright test --grep-invert @GAD-R01-01
+```
+
 For more usage cases look in `package.json` scripts section.
+
+```
+
+```

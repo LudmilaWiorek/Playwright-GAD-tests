@@ -3,8 +3,9 @@ import { CommentsPage } from '../src/pages/comments.page'
 import { HomePage } from '../src/pages/home.page'
 import { expect, test } from '@playwright/test'
 
-test.describe('GAD application tests', () => {
-  test('home page title', async ({ page }) => {
+test.describe('Verify service main pages', () => {
+  test('home page title @GAD-R01-01', async ({ page }) => {
+    // added tag bounded to requirements - run test using command: npx playwright test --grep @GAD-R01-01; tags are also visible on reports; if we want to run test with tag @GAD - we have to write: npx playwright test --grep "@GAD"
     //Arrange
     const homePage = new HomePage(page)
 
@@ -16,7 +17,7 @@ test.describe('GAD application tests', () => {
     expect(title).toContain('GAD')
   })
 
-  test('articles page title', async ({ page }) => {
+  test('articles page title @GAD-R01-02', async ({ page }) => {
     // Arrange
     const articlesPage = new ArticlesPage(page)
 
@@ -37,7 +38,7 @@ test.describe('GAD application tests', () => {
     await expect(page).toHaveTitle(/GAD/)
   })
 
-  test('comments page title', async ({ page }) => {
+  test('comments page title @GAD-R01-02', async ({ page }) => {
     //Arrange
     const commentsPage = new CommentsPage(page)
 
