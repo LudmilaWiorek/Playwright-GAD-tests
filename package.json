@@ -10,7 +10,10 @@
     "test": "npx playwright test",
     "test:headed": "npm run test -- --headed",
     "test:ui": "npm run test -- --ui",
-    "show-report": "npx playwright show-report"
+    "show-report": "npx playwright show-report",
+    "test:grep": "npx playwright test --grep \"@GAD-R01-01|@GAD-R01-02\"",
+    "test:grep:CMD": "npx playwright test --grep \"@GAD-R01-01^|@GAD-R01-02\"",
+    "test:grep:powershell": "npx playwright test --grep --%  \"@GAD-R01-01^|@GAD-R01-02\""
   },
   "keywords": [],
   "author": "",
