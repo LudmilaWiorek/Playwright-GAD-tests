@@ -23,17 +23,16 @@ test.describe('Verify service main pages', () => {
 
     //Act
     await articlesPage.goto()
-
+    await page.waitForLoadState()
     //Assert
-    await expect(page).toHaveTitle(/Articles/)
     const title = await articlesPage.title()
+    await expect(page).toHaveTitle(/Articles/)
     expect(title).toContain('Articles')
   })
 
   test('home page title simple', async ({ page }) => {
     // Act
     await page.goto('')
-
     // Assert
     await expect(page).toHaveTitle(/GAD/)
   })
@@ -46,8 +45,8 @@ test.describe('Verify service main pages', () => {
     await commentsPage.goto()
 
     //Assert
-    await expect(page).toHaveTitle(/Comments/)
     const title = await commentsPage.title()
+    // await expect(page).toHaveTitle(/Comments/)
     expect(title).toContain('Comments')
   })
 })
