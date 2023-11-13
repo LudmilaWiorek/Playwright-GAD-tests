@@ -9,7 +9,7 @@ test.describe('Verify login', () => {
     const loginPage = new LoginPage(page)
     await loginPage.goto()
     const userEmail = testUser2.userEmail
-    const userPassword = 'test2'
+    const userPassword = testUser2.userPassword
     //Act
     await loginPage.goto()
     await loginPage.login(userEmail, userPassword)
