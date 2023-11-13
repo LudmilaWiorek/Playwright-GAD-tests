@@ -1,5 +1,6 @@
 import { LoginPage } from '../src/pages/login.page'
 import { WelcomePage } from '../src/pages/welcome.page'
+import { testUser2 } from '../src/test-data/user-data'
 import { expect, test } from '@playwright/test'
 
 test.describe('Verify login', () => {
@@ -7,7 +8,7 @@ test.describe('Verify login', () => {
     //Arrange
     const loginPage = new LoginPage(page)
     await loginPage.goto()
-    const userEmail = 'Danial.Dicki@dicki.test'
+    const userEmail = testUser2.userEmail
     const userPassword = 'test2'
     //Act
     await loginPage.goto()
