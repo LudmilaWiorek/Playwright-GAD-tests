@@ -8,5 +8,3 @@ export class WelcomePage extends BasePage {
     super(page)
   }
 }
-
-// http://localhost:3000/welcome
