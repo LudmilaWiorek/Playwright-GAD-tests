@@ -9,8 +9,8 @@ test.describe('Verify register', () => {
     page,
   }) => {
     //Arrange
-    const userFirstName = faker.person.firstName()
-    const userLastName = faker.person.lastName()
+    const userFirstName = faker.person.firstName().replace(/[^A-Za-z]/g, '') //g oznacza, zeby wykonac dla wszystkich wystapien, nie tylko dla jednego apostrofa
+    const userLastName = faker.person.lastName().replace(/[^A-Za-z]/g, '')
     const userEmail = faker.internet.email({
       firstName: userFirstName,
       lastName: userLastName,
