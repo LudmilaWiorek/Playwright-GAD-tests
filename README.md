@@ -24,6 +24,7 @@ Follow instructions in app README
 - setup husky with: `npx husky install`
 - prepare local env file: `cp .env-template .env`
 - copy application main URL as value of `BASE_URL` variable in `.env` file
+- install faker library: `npm install --save-dev @faker-js/faker`
 
 ## Use
 
