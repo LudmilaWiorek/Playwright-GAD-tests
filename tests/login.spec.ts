@@ -7,14 +7,11 @@ import { expect, test } from '@playwright/test'
 test.describe('Verify login', () => {
   test('login with correct credentials @GAD_R02_01', async ({ page }) => {
     //Arrange
-    const loginUserData: LoginUser = {
-      userEmail: testUser2.userEmail,
-      userPassword: testUser2.userPassword,
-    }
+
     const loginPage = new LoginPage(page)
     //Act
     await loginPage.goto()
-    await loginPage.loginNew(loginUserData)
+    await loginPage.login(testUser2)
 
     const welcomePage = new WelcomePage(page)
     const title = await welcomePage.title()
@@ -24,14 +21,15 @@ test.describe('Verify login', () => {
   })
   test('reject login with incorrect password', async ({ page }) => {
     //Arrange
-    const userEmail = testUser2.userEmail
-    const userPassword = 'incorrect'
+    const loginUserData: LoginUser = {
+      userEmail: testUser2.userEmail,
+      userPassword: 'incorrectPassword',
+    }
     const loginPage = new LoginPage(page)
-    // const loginErrorMessage = page.getByTestId('login-error')
 
     //Act
     await loginPage.goto()
-    await loginPage.login(userEmail, userPassword)
+    await loginPage.login(loginUserData)
 
     //Assert
     await expect
