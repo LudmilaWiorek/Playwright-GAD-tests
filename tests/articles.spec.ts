@@ -1,4 +1,5 @@
 import { randomNewArticle } from '../src/factories/article.factory'
+import { AddArticleModel } from '../src/models/article.model'
 import { ArticlePage } from '../src/pages/article.page'
 import { ArticlesPage } from '../src/pages/articles.page'
 import { LoginPage } from '../src/pages/login.page'
@@ -7,77 +8,60 @@ import { AddArticleView } from '../src/views/add-article.view'
 import { expect, test } from '@playwright/test'
 
 test.describe('Verify articles', () => {
-  test('create new article @GAD_R04_01', async ({ page }) => {
-    //Arrange
-    const loginPage = new LoginPage(page)
+  let loginPage: LoginPage
+  let addArticleView: AddArticleView
+  let articlesPage: ArticlesPage
+  let articleData: AddArticleModel
+  test.beforeEach(async ({ page }) => {
+    loginPage = new LoginPage(page)
+    addArticleView = new AddArticleView(page)
+    articlesPage = new ArticlesPage(page)
+
     await loginPage.goto()
     await loginPage.login(testUser2)
-
-    const articlesPage = new ArticlesPage(page)
     await articlesPage.goto()
-    // Act
     await articlesPage.addArticleButtonLogged.click()
-    const addArticleView = new AddArticleView(page)
-    await expect.soft(addArticleView.header).toBeVisible()
 
-    const articleData = randomNewArticle()
+    articleData = randomNewArticle()
+
+    await expect.soft(addArticleView.header).toBeVisible()
+  })
+
+  test('create new article @GAD_R04_01', async ({ page }) => {
+    //Arrange
+    const articlePage = new ArticlePage(page)
+
+    // Act
     await addArticleView.createArticle(articleData)
 
     //Assert
-    const articlePage = new ArticlePage(page)
     await expect.soft(articlePage.articleTitle).toHaveText(articleData.title)
     await expect
       .soft(articlePage.articleBody)
       .toHaveText(articleData.body, { useInnerText: true })
   })
-  // two negative tests below - failed to create new article not filling title/body fields - are own work in the course
-  test('unsuccessful creating new article @GAD_R04_01 with empty title', async ({
-    page,
-  }) => {
+
+  test('unsuccessful creating new article @GAD_R04_01 with empty title', async () => {
     //Arrange
-    const loginPage = new LoginPage(page)
-    await loginPage.goto()
-    await loginPage.login(testUser2)
-
-    const articlesPage = new ArticlesPage(page)
-    await articlesPage.goto()
-    //Act
-    await articlesPage.addArticleButtonLogged.click()
-
-    //Assert
-    const addArticleView = new AddArticleView(page)
-    await expect.soft(addArticleView.header).toBeVisible()
-    const articleData = randomNewArticle()
+    const expectedErrorMessage = 'Article was not created'
     articleData.title = ''
-    await addArticleView.createArticle(articleData)
-    await expect(addArticleView.messageCannotAddArticle).toBeVisible()
-    await expect(addArticleView.messageCannotAddArticle).toHaveText(
-      'Article was not created',
-    )
-  })
-  test('unsuccessful creating new article @GAD_R04_01 with empty body', async ({
-    page,
-  }) => {
-    //Arrange
-    const loginPage = new LoginPage(page)
-    await loginPage.goto()
-    await loginPage.login(testUser2)
 
-    const articlesPage = new ArticlesPage(page)
-    await articlesPage.goto()
     //Act
-    await articlesPage.addArticleButtonLogged.click()
+    await addArticleView.createArticle(articleData)
 
     //Assert
-    const addArticleView = new AddArticleView(page)
-    await expect.soft(addArticleView.header).toBeVisible()
-    const articleData = randomNewArticle()
+    await expect(addArticleView.alertPopUp).toHaveText(expectedErrorMessage)
+  })
+
+  test('unsuccessful creating new article @GAD_R04_01 with empty body', async () => {
+    //Arrange
+    const expectedErrorMessage = 'Article was not created'
     articleData.body = ''
+
+    //Act
     await addArticleView.createArticle(articleData)
 
-    await expect(addArticleView.messageCannotAddArticle).toBeVisible()
-    await expect(addArticleView.messageCannotAddArticle).toHaveText(
-      'Article was not created',
-    )
+    //Assert
+    await expect(addArticleView.alertPopUp).toHaveText(expectedErrorMessage)
   })
 })

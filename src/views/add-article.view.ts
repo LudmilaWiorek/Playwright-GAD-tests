@@ -6,7 +6,7 @@ export class AddArticleView {
   titleInput = this.page.getByTestId('title-input')
   bodyInput = this.page.getByTestId('body-text')
   saveButton = this.page.getByTestId('save')
-  messageCannotAddArticle = this.page.locator('#alertPopup')
+  alertPopUp = this.page.locator('#alertPopup')
 
   constructor(private page: Page) {}
 
