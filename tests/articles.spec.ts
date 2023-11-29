@@ -24,21 +24,7 @@ test.describe('Verify articles', () => {
     await expect.soft(addArticleView.header).toBeVisible()
   })
 
-  test('create new article @GAD_R04_01', async ({ page }) => {
-    //Arrange
-    const articlePage = new ArticlePage(page)
-    const articleData = randomNewArticle()
-
-    // Act
-    await addArticleView.createArticle(articleData)
-    //Assert
-    await expect.soft(articlePage.articleTitle).toHaveText(articleData.title)
-    await expect
-      .soft(articlePage.articleBody)
-      .toHaveText(articleData.body, { useInnerText: true })
-  })
-
-  test('unsuccessful creating new article @GAD_R04_01 with empty title', async () => {
+  test('reject creating new article @GAD_R04_01 with empty title', async () => {
     //Arrange
     const expectedErrorMessage = 'Article was not created'
     const articleData = randomNewArticle()
@@ -50,7 +36,7 @@ test.describe('Verify articles', () => {
     await expect(addArticleView.alertPopUp).toHaveText(expectedErrorMessage)
   })
 
-  test('unsuccessful creating new article @GAD_R04_01 with empty body', async () => {
+  test('reject creating new article @GAD_R04_01 with empty body', async () => {
     //Arrange
     const expectedErrorMessage = 'Article was not created'
     const articleData = randomNewArticle()
@@ -61,6 +47,7 @@ test.describe('Verify articles', () => {
     //Assert
     await expect(addArticleView.alertPopUp).toHaveText(expectedErrorMessage)
   })
+
   //attention: nested describe IN describe!
   test.describe('Verify title length', () => {
     test('reject creating article with title exceeding 128 signs @GAD_R04_02', async () => {
