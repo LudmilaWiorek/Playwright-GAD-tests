@@ -61,28 +61,30 @@ test.describe('Verify articles', () => {
     //Assert
     await expect(addArticleView.alertPopUp).toHaveText(expectedErrorMessage)
   })
+  //attention: nested describe IN describe!
+  test.describe('Verify title length', () => {
+    test('reject creating article with title exceeding 128 signs @GAD_R04_02', async () => {
+      const expectedErrorMessage = 'Article was not created'
+      const articleData = randomNewArticle(129)
 
-  test('reject creating article with title exceeding 128 signs @GAD_R04_02', async () => {
-    const expectedErrorMessage = 'Article was not created'
-    const articleData = randomNewArticle(129)
+      // Act
+      await addArticleView.createArticle(articleData)
 
-    // Act
-    await addArticleView.createArticle(articleData)
+      //Assert
+      await expect(addArticleView.alertPopUp).toHaveText(expectedErrorMessage)
+    })
 
-    //Assert
-    await expect(addArticleView.alertPopUp).toHaveText(expectedErrorMessage)
-  })
+    test('create article with title equals 128 signs @GAD_R04_02', async ({
+      page,
+    }) => {
+      const articlePage = new ArticlePage(page)
+      const articleData = randomNewArticle(128)
 
-  test('create article with title equals 128 signs @GAD_R04_02', async ({
-    page,
-  }) => {
-    const articlePage = new ArticlePage(page)
-    const articleData = randomNewArticle(128)
+      // Act
+      await addArticleView.createArticle(articleData)
 
-    // Act
-    await addArticleView.createArticle(articleData)
-
-    //Assert
-    await expect.soft(articlePage.articleTitle).toHaveText(articleData.title)
+      //Assert
+      await expect.soft(articlePage.articleTitle).toHaveText(articleData.title)
+    })
   })
 })
