@@ -13,7 +13,7 @@ test.describe('Verify login', () => {
     await loginPage.login(testUser2)
 
     const welcomePage = new WelcomePage(page)
-    const title = await welcomePage.title()
+    const title = await welcomePage.getTitle()
 
     //Assert
     expect(title).toContain('Welcome')

@@ -7,7 +7,7 @@ export class BasePage {
   async goto(): Promise<void> {
     await this.page.goto(this.url)
   }
-  async title(): Promise<string> {
+  async getTitle(): Promise<string> {
     await this.page.waitForLoadState()
     return await this.page.title()
   }
