@@ -53,6 +53,7 @@ test.describe('Create, verify and delete article', () => {
       .soft(articlePage.articleBody)
       .toHaveText(articleData.body, { useInnerText: true })
   })
+
   test('user can delete his own article @GAD_R04_04', async () => {
     //Arrange
     await articlesPage.gotoArticle(articleData.title)
