@@ -1,4 +1,4 @@
-import { randomNewArticle } from '../src/factories/article.factory'
+import { prepareRandomNewArticle } from '../src/factories/article.factory'
 import { ArticlePage } from '../src/pages/article.page'
 import { ArticlesPage } from '../src/pages/articles.page'
 import { LoginPage } from '../src/pages/login.page'
@@ -27,7 +27,7 @@ test.describe('Verify articles', () => {
   test('reject creating new article @GAD_R04_01 with empty title', async () => {
     //Arrange
     const expectedErrorMessage = 'Article was not created'
-    const articleData = randomNewArticle()
+    const articleData = prepareRandomNewArticle()
     articleData.title = ''
     //Act
     await addArticleView.createArticle(articleData)
@@ -39,7 +39,7 @@ test.describe('Verify articles', () => {
   test('reject creating new article @GAD_R04_01 with empty body', async () => {
     //Arrange
     const expectedErrorMessage = 'Article was not created'
-    const articleData = randomNewArticle()
+    const articleData = prepareRandomNewArticle()
     articleData.body = ''
     //Act
     await addArticleView.createArticle(articleData)
@@ -52,7 +52,7 @@ test.describe('Verify articles', () => {
   test.describe('Verify title length', () => {
     test('reject creating article with title exceeding 128 signs @GAD_R04_02', async () => {
       const expectedErrorMessage = 'Article was not created'
-      const articleData = randomNewArticle(129)
+      const articleData = prepareRandomNewArticle(129)
 
       // Act
       await addArticleView.createArticle(articleData)
@@ -65,7 +65,7 @@ test.describe('Verify articles', () => {
       page,
     }) => {
       const articlePage = new ArticlePage(page)
-      const articleData = randomNewArticle(128)
+      const articleData = prepareRandomNewArticle(128)
 
       // Act
       await addArticleView.createArticle(articleData)

@@ -1,4 +1,4 @@
-import { randomUserData } from '../src/factories/user.factory'
+import { prepareRandomUser } from '../src/factories/user.factory'
 import { RegisterUserModel } from '../src/models/user.model'
 import { LoginPage } from '../src/pages/login.page'
 import { RegisterPage } from '../src/pages/register.page'
@@ -12,7 +12,7 @@ test.describe('Verify register', () => {
 
   test.beforeEach(async ({ page }) => {
     registerPage = new RegisterPage(page)
-    registerUserData = randomUserData()
+    registerUserData = prepareRandomUser()
     await registerPage.goto()
   })
   test('register with correct data and login @GAD_R03_01, @GAD_R03_02, @GAD_R03_03', async ({
