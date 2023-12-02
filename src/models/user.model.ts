@@ -3,7 +3,7 @@ export interface LoginUserModel {
   userPassword: string
 }
 
-export interface RegisterUser {
+export interface RegisterUserModel {
   userFirstName: string
   userLastName: string
   userEmail: string
