@@ -9,11 +9,11 @@ test.describe('Verify login', () => {
     const expectedWelcomeTitle = 'Welcome'
 
     const loginPage = new LoginPage(page)
+    const welcomePage = new WelcomePage(page)
     //Act
     await loginPage.goto()
     await loginPage.login(testUser2)
 
-    const welcomePage = new WelcomePage(page)
     const title = await welcomePage.getTitle()
 
     //Assert
