@@ -1,3 +1,4 @@
+import { LoginUserModel } from '../src/models/user.model'
 import { LoginPage } from '../src/pages/login.page'
 import { WelcomePage } from '../src/pages/welcome.page'
 import { testUser2 } from '../src/test-data/user-data'
@@ -18,5 +19,26 @@ test.describe('Verify login', () => {
 
     //Assert
     expect(title).toContain(expectedWelcomeTitle)
+  })
+  test('reject login with incorrect password @GAD-R02-01', async ({ page }) => {
+    // Arrange
+    const expectedLoginTitle = 'Login'
+    const loginPage = new LoginPage(page)
+
+    const loginUserData: LoginUserModel = {
+      userEmail: testUser2.userEmail,
+      userPassword: 'incorrectPassword',
+    }
+
+    // Act
+    await loginPage.goto()
+    await loginPage.login(loginUserData)
+
+    // Assert
+    await expect
+      .soft(loginPage.loginError)
+      .toHaveText('Invalid username or password')
+    const title = await loginPage.getTitle()
+    expect.soft(title).toContain(expectedLoginTitle)
   })
 })
