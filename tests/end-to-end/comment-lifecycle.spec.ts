@@ -1,4 +1,5 @@
 import { prepareRandomNewArticle } from '../../src/factories/article.factory'
+import { prepareRandomComment } from '../../src/factories/comment.factory'
 import { AddArticleModel } from '../../src/models/article.model'
 import { ArticlePage } from '../../src/pages/article.page'
 import { ArticlesPage } from '../../src/pages/articles.page'
@@ -38,31 +39,34 @@ test.describe('Create, verify and delete comment', () => {
 
   test('create new comment @GAD_R05_01', async () => {
     //Create new comment
+
     //Arrange
     const expectedCommentCreatedPopup = 'Comment was created'
-    const commentText = 'hello world'
     const expectedAddCommentHeader = 'Add New Comment'
+
+    const newCommentData = prepareRandomComment()
+
     // Act
     await articlePage.addCommentButton.click()
     await expect(addCommentView.addNewHeader).toHaveText(
       expectedAddCommentHeader,
     )
-    await addCommentView.bodyInputComment.fill(commentText)
+    await addCommentView.bodyInputComment.fill(newCommentData.body)
     await addCommentView.saveCommentButton.click()
 
     //Assert
     await expect(articlePage.commentPopUp).toHaveText(
       expectedCommentCreatedPopup,
     )
+
     //Verify comment
     //Act
-    const articleComment = articlePage.getArticleComment(commentText)
+    const articleComment = articlePage.getArticleComment(newCommentData.body)
 
-    //construct CSS, which let us indicate right comment
-    await expect(articleComment.body).toHaveText(commentText)
+    await expect(articleComment.body).toHaveText(newCommentData.body)
 
     await articleComment.link.click()
     //Assert
-    await expect(commentPage.commentBody).toHaveText(commentText)
+    await expect(commentPage.commentBody).toHaveText(newCommentData.body)
   })
 })
