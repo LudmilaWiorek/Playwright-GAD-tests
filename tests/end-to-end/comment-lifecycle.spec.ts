@@ -2,6 +2,7 @@ import { prepareRandomNewArticle } from '../../src/factories/article.factory'
 import { AddArticleModel } from '../../src/models/article.model'
 import { ArticlePage } from '../../src/pages/article.page'
 import { ArticlesPage } from '../../src/pages/articles.page'
+import { CommentPage } from '../../src/pages/comment.page'
 import { LoginPage } from '../../src/pages/login.page'
 import { testUser2 } from '../../src/test-data/user-data'
 import { AddArticleView } from '../../src/views/add-article.view'
@@ -16,6 +17,7 @@ test.describe('Create, verify and delete comment', () => {
   let articleData: AddArticleModel
   let articlePage: ArticlePage
   let addCommentView: AddCommentView
+  let commentPage: CommentPage
 
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page)
@@ -23,6 +25,7 @@ test.describe('Create, verify and delete comment', () => {
     articlesPage = new ArticlesPage(page)
     articlePage = new ArticlePage(page)
     addCommentView = new AddCommentView(page)
+    commentPage = new CommentPage(page)
 
     articleData = prepareRandomNewArticle()
 
@@ -37,19 +40,29 @@ test.describe('Create, verify and delete comment', () => {
     //Create new comment
     //Arrange
     const expectedCommentCreatedPopup = 'Comment was created'
-    const commentBodyText = 'hello world'
+    const commentText = 'hello world'
     const expectedAddCommentHeader = 'Add New Comment'
     // Act
     await articlePage.addCommentButton.click()
     await expect(addCommentView.addNewHeader).toHaveText(
       expectedAddCommentHeader,
     )
-    await addCommentView.bodyInputComment.fill(commentBodyText)
+    await addCommentView.bodyInputComment.fill(commentText)
     await addCommentView.saveCommentButton.click()
 
     //Assert
     await expect(articlePage.commentPopUp).toHaveText(
       expectedCommentCreatedPopup,
     )
+    //Verify comment
+    //Act
+    const articleComment = articlePage.getArticleComment(commentText)
+
+    //construct CSS, which let us indicate right comment
+    await expect(articleComment.body).toHaveText(commentText)
+
+    await articleComment.link.click()
+    //Assert
+    await expect(commentPage.commentBody).toHaveText(commentText)
   })
 })
