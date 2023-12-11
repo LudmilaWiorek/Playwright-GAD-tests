@@ -7,8 +7,9 @@ export class CommentPage extends BasePage {
   mainMenu = new MainMenuComponent(this.page)
 
   commentBody = this.page.getByTestId('comment-body')
-  // commentPopUp = this.page.getByTestId('alert-popup')
-
+  alertPopup = this.page.getByTestId('alert-popup')
+  editButton = this.page.getByTestId('edit')
+  returnLink = this.page.getByTestId('return')
   constructor(page: Page) {
     super(page)
   }
