@@ -14,7 +14,7 @@ export class ArticlePage extends BasePage {
   articleBody = this.page.getByTestId('article-body')
   deleteIcon = this.page.getByTestId('delete')
   addCommentButton = this.page.locator('#add-new-comment')
-  commentPopUp = this.page.getByTestId('alert-popup')
+  alertPopup = this.page.getByTestId('alert-popup')
 
   constructor(page: Page) {
     super(page)

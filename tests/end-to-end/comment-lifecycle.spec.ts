@@ -1,6 +1,7 @@
 import { prepareRandomNewArticle } from '../../src/factories/article.factory'
 import { prepareRandomComment } from '../../src/factories/comment.factory'
 import { AddArticleModel } from '../../src/models/article.model'
+import { AddCommentModel } from '../../src/models/comment.model'
 import { ArticlePage } from '../../src/pages/article.page'
 import { ArticlesPage } from '../../src/pages/articles.page'
 import { CommentPage } from '../../src/pages/comment.page'
@@ -11,7 +12,6 @@ import { AddCommentView } from '../../src/views/add-comment.view'
 import { EditCommentView } from '../../src/views/edit-comment.view'
 import { expect, test } from '@playwright/test'
 
-//refactor names in all files: F2, changing name, press left shift + enter
 test.describe('Create, verify and delete comment', () => {
   let loginPage: LoginPage
   let addArticleView: AddArticleView
@@ -40,53 +40,69 @@ test.describe('Create, verify and delete comment', () => {
     await addArticleView.createArticle(articleData)
   })
 
-  test('create new comment @GAD_R05_01', async () => {
-    //Create new comment
-
-    //Arrange
+  test('operate on comments @GAD_R05_01', async () => {
     const expectedCommentCreatedPopup = 'Comment was created'
-    const expectedAddCommentHeader = 'Add New Comment'
-    const expectedCommentUpdatedPopup = 'Comment was updated'
 
     const newCommentData = prepareRandomComment()
 
-    // Act
-    await articlePage.addCommentButton.click()
-    await expect(addCommentView.addNewHeader).toHaveText(
-      expectedAddCommentHeader,
-    )
-    //grouping two actions in one method in addCommentView
-    await addCommentView.createComment(newCommentData)
+    //added 1. TEST STEP into test!!! test step is asynchronous, so must use "await"
+    await test.step('create new comment', async () => {
+      //Arrange
+      const expectedAddCommentHeader = 'Add New Comment'
+      //Act
+      await articlePage.addCommentButton.click()
+      await expect
+        .soft(addCommentView.addNewHeader)
+        .toHaveText(expectedAddCommentHeader)
+      await addCommentView.createComment(newCommentData)
+      //Assert
+      await expect
+        .soft(articlePage.alertPopup)
+        .toHaveText(expectedCommentCreatedPopup)
+    })
 
-    //Assert
-    await expect(articlePage.commentPopUp).toHaveText(
-      expectedCommentCreatedPopup,
-    )
+    //2. TEST STEP
+    await test.step('verify comment', async () => {
+      //Act
+      const articleComment = articlePage.getArticleComment(newCommentData.body)
+      await expect(articleComment.body).toHaveText(newCommentData.body)
+      await articleComment.link.click()
+      //Assert
+      await expect(commentPage.commentBody).toHaveText(newCommentData.body)
+    })
 
-    //Verify comment
-    //Act
-    const articleComment = articlePage.getArticleComment(newCommentData.body)
+    //Added let editCommentData, so it can be read in both steps below
+    let editCommentData: AddCommentModel
+    //3. TEST STEP
+    await test.step('update comment', async () => {
+      //Arrange
+      const expectedCommentUpdatedPopup = 'Comment was updated'
 
-    await expect(articleComment.body).toHaveText(newCommentData.body)
+      editCommentData = prepareRandomComment()
+      //Act
+      await commentPage.editButton.click()
 
-    await articleComment.link.click()
-    //Assert
-    await expect(commentPage.commentBody).toHaveText(newCommentData.body)
+      // grouping action in one function updateComment in editCommentView
+      await editCommentView.updateComment(editCommentData)
+      //Assert
+      await expect(commentPage.alertPopup).toHaveText(
+        expectedCommentUpdatedPopup,
+      )
+      await expect
+        .soft(commentPage.commentBody)
+        .toHaveText(editCommentData.body)
+    })
 
-    //Edit comment - recording next part of test by using 'record at cursor' option in playwright testing extension
-    const editCommentData = prepareRandomComment()
-    await commentPage.editButton.click()
+    //4. TEST STEP
+    await test.step('verify updated comment in article page', async () => {
+      //Act
+      await commentPage.returnLink.click()
 
-    // grouping action in one function updateComment in editCommentView
-    await editCommentView.updateComment(editCommentData)
-    await expect(commentPage.commentBody).toHaveText(editCommentData.body)
-    await expect(commentPage.alertPopup).toHaveText(expectedCommentUpdatedPopup)
-    await commentPage.returnLink.click()
-
-    const updatedArticleComment = articlePage.getArticleComment(
-      editCommentData.body,
-    )
-
-    await expect(updatedArticleComment.body).toHaveText(editCommentData.body)
+      const updatedArticleComment = articlePage.getArticleComment(
+        editCommentData.body,
+      )
+      //Assert
+      await expect(updatedArticleComment.body).toHaveText(editCommentData.body)
+    })
   })
 })

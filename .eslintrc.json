@@ -18,7 +18,7 @@
   "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "error",
-    "no-console": "warn", //ciekawa opcja - ma nie być console.log w kodzie, jesli je wpiszemy, sa podkreslane jak bląd.
+    "no-console": "warn",
     "prettier/prettier": "warn"
   }
 }
