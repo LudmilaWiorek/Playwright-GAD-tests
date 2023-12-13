@@ -123,14 +123,14 @@ test.describe('Create, verify and delete comment', () => {
     })
 
     await test.step('create and verify second comment', async () => {
-      // eslint-disable-next-line playwright/no-nested-step
+      // got rid of bug: "// eslint-disable-next-line playwright/no-nested-step"
+      // by adding rule to eslint.json - "playwright/no-nested-step": off - it's global change!
       const secondCommentBody = await test.step('create comment', async () => {
         const secondCommentData = prepareRandomComment()
         await articlePage.addCommentButton.click()
         await addCommentView.createComment(secondCommentData)
         return secondCommentData.body
       })
-      // eslint-disable-next-line playwright/no-nested-step
       await test.step('verify comment', async () => {
         const articleComment = articlePage.getArticleComment(secondCommentBody)
         await expect(articleComment.body).toHaveText(secondCommentBody)
