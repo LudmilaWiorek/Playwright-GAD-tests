@@ -40,7 +40,7 @@ test.describe('Create, verify and delete comment', () => {
     await addArticleView.createArticle(articleData)
   })
 
-  test('operate on comments @GAD_R05_01, @GAD-R05-02, @GAD-R05-03', async () => {
+  test('operate on comments @GAD_R05_01, @GAD_R05_02', async () => {
     const expectedCommentCreatedPopup = 'Comment was created'
 
     const newCommentData = prepareRandomComment()
@@ -97,28 +97,46 @@ test.describe('Create, verify and delete comment', () => {
     await test.step('verify updated comment in article page', async () => {
       //Act
       await commentPage.returnLink.click()
-
       const updatedArticleComment = articlePage.getArticleComment(
         editCommentData.body,
       )
       //Assert
       await expect(updatedArticleComment.body).toHaveText(editCommentData.body)
     })
-
-    //5. TEST STEP for requirement: user can add more than one comment
-    await test.step('create and verify second comment', async () => {
-      const secondCommentData = prepareRandomComment()
+  })
+  // added new test to test describe instead of test step 5 - careful with nesting!
+  //IMPLEMENTATION NESTED TEST STEPS!
+  test('user can add more than one comment to article @GAD_R05_03', async () => {
+    //copy paste 1. test step here
+    await test.step('create first comment', async () => {
+      //Arrange
+      const expectedCommentCreatedPopup = 'Comment was created'
+      const newCommentData = prepareRandomComment()
       //Act
       await articlePage.addCommentButton.click()
-      await addCommentView.createComment(secondCommentData)
 
+      await addCommentView.createComment(newCommentData)
       //Assert
-      const articleComment = articlePage.getArticleComment(
-        secondCommentData.body,
-      )
-      await expect(articleComment.body).toHaveText(secondCommentData.body)
-      await articleComment.link.click()
-      await expect(commentPage.commentBody).toHaveText(secondCommentData.body)
+      await expect
+        .soft(articlePage.alertPopup)
+        .toHaveText(expectedCommentCreatedPopup)
+    })
+
+    await test.step('create and verify second comment', async () => {
+      // eslint-disable-next-line playwright/no-nested-step
+      const secondCommentBody = await test.step('create comment', async () => {
+        const secondCommentData = prepareRandomComment()
+        await articlePage.addCommentButton.click()
+        await addCommentView.createComment(secondCommentData)
+        return secondCommentData.body
+      })
+      // eslint-disable-next-line playwright/no-nested-step
+      await test.step('verify comment', async () => {
+        const articleComment = articlePage.getArticleComment(secondCommentBody)
+        await expect(articleComment.body).toHaveText(secondCommentBody)
+        await articleComment.link.click()
+        await expect(commentPage.commentBody).toHaveText(secondCommentBody)
+      })
     })
   })
 })

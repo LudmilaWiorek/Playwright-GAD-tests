@@ -50,8 +50,7 @@ For more usage cases look in `package.json` scripts section.
 
 ```
 
-```
-
 ## Shortcuts
 
 refactor names in all files: F2, changing name, press left shift + enter
+```
