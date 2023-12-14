@@ -42,10 +42,8 @@ test.describe('Create, verify and delete comment', () => {
 
   test('operate on comments @GAD_R05_01, @GAD_R05_02', async () => {
     const expectedCommentCreatedPopup = 'Comment was created'
-
     const newCommentData = prepareRandomComment()
 
-    //added 1. TEST STEP into test!!! test step is asynchronous, so must use "await"
     await test.step('create new comment', async () => {
       //Arrange
       const expectedAddCommentHeader = 'Add New Comment'
@@ -61,7 +59,6 @@ test.describe('Create, verify and delete comment', () => {
         .toHaveText(expectedCommentCreatedPopup)
     })
 
-    //2. TEST STEP
     await test.step('verify comment', async () => {
       //Act
       const articleComment = articlePage.getArticleComment(newCommentData.body)
@@ -71,18 +68,13 @@ test.describe('Create, verify and delete comment', () => {
       await expect(commentPage.commentBody).toHaveText(newCommentData.body)
     })
 
-    //Added let editCommentData, so it can be read in both steps below
     let editCommentData: AddCommentModel
-    //3. TEST STEP
     await test.step('update comment', async () => {
       //Arrange
       const expectedCommentUpdatedPopup = 'Comment was updated'
-
       editCommentData = prepareRandomComment()
       //Act
       await commentPage.editButton.click()
-
-      // grouping action in one function updateComment in editCommentView
       await editCommentView.updateComment(editCommentData)
       //Assert
       await expect(commentPage.alertPopup).toHaveText(
@@ -93,7 +85,6 @@ test.describe('Create, verify and delete comment', () => {
         .toHaveText(editCommentData.body)
     })
 
-    //4. TEST STEP
     await test.step('verify updated comment in article page', async () => {
       //Act
       await commentPage.returnLink.click()
@@ -104,17 +95,14 @@ test.describe('Create, verify and delete comment', () => {
       await expect(updatedArticleComment.body).toHaveText(editCommentData.body)
     })
   })
-  // added new test to test describe instead of test step 5 - careful with nesting!
-  //IMPLEMENTATION NESTED TEST STEPS!
+
   test('user can add more than one comment to article @GAD_R05_03', async () => {
-    //copy paste 1. test step here
     await test.step('create first comment', async () => {
       //Arrange
       const expectedCommentCreatedPopup = 'Comment was created'
       const newCommentData = prepareRandomComment()
       //Act
       await articlePage.addCommentButton.click()
-
       await addCommentView.createComment(newCommentData)
       //Assert
       await expect
@@ -123,8 +111,6 @@ test.describe('Create, verify and delete comment', () => {
     })
 
     await test.step('create and verify second comment', async () => {
-      // got rid of bug: "// eslint-disable-next-line playwright/no-nested-step"
-      // by adding rule to eslint.json - "playwright/no-nested-step": off - it's global change!
       const secondCommentBody = await test.step('create comment', async () => {
         const secondCommentData = prepareRandomComment()
         await articlePage.addCommentButton.click()

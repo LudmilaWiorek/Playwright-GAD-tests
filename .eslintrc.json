@@ -7,7 +7,7 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:playwright/playwright-test",
-    "prettier" //prettier ma funkcjonowac po eslincie
+    "prettier" //prettier should be at the end
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {

@@ -26,5 +26,14 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
+    {
+      name: 'setup',
+      testMatch: '*setup.ts', //all test who has setup in name
+    },
+    {
+      name: 'logged',
+      grep: /@logged/,
+      dependencies: ['setup'], // logged is dependent of setup.
+    },
   ],
 })
