@@ -4,5 +4,6 @@
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"
   },
-  "cSpell.words": ["Havetitle"]
+  "cSpell.words": ["Havetitle"],
+  "typescript.preferences.importModuleSpecifier": "non-relative" // thanks to it quick fix properly suggest path of import
 }
