@@ -6,7 +6,7 @@ import { expect, test as setup } from '@playwright/test'
 
 //setup, not test, coz it's not typical test, but preparing to sth
 
-setup('login with correct credentials', async ({ page }) => {
+setup('login and save session', async ({ page }) => {
   //Arrange
   const expectedWelcomeTitle = 'Welcome'
 
