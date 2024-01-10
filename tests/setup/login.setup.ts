@@ -1,7 +1,7 @@
 import { STORAGE_STATE } from '../../playwright.config'
-import { LoginPage } from '../../src/pages/login.page'
-import { WelcomePage } from '../../src/pages/welcome.page'
-import { testUser2 } from '../../src/test-data/user-data'
+import { LoginPage } from '@_src/pages/login.page'
+import { WelcomePage } from '@_src/pages/welcome.page'
+import { testUser2 } from '@_src/test-data/user-data'
 import { expect, test as setup } from '@playwright/test'
 
 //setup, not test, coz it's not typical test, but preparing to sth

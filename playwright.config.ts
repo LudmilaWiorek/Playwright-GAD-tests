@@ -31,7 +31,7 @@ export default defineConfig({
     },
     {
       name: 'setup',
-      testMatch: '**setup.ts', //all test who has setup in name
+      testMatch: '**setup.ts', //all test with 'setup' in the name
     },
     {
       name: 'chromium-logged',

@@ -1,9 +1,9 @@
-import { prepareRandomUser } from '../../src/factories/user.factory'
-import { RegisterUserModel } from '../../src/models/user.model'
-import { LoginPage } from '../../src/pages/login.page'
-import { RegisterPage } from '../../src/pages/register.page'
-import { WelcomePage } from '../../src/pages/welcome.page'
 //faker-js/faker/locale/en - users english speaking; pl - polish etc
+import { prepareRandomUser } from '@_src/factories/user.factory'
+import { RegisterUserModel } from '@_src/models/user.model'
+import { LoginPage } from '@_src/pages/login.page'
+import { RegisterPage } from '@_src/pages/register.page'
+import { WelcomePage } from '@_src/pages/welcome.page'
 import { expect, test } from '@playwright/test'
 
 test.describe('Verify register', () => {
