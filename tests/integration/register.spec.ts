@@ -1,7 +1,6 @@
 //faker-js/faker/locale/en - users english speaking; pl - polish etc
 import { prepareRandomUser } from '@_src/factories/user.factory'
 import { RegisterUserModel } from '@_src/models/user.model'
-import { LoginPage } from '@_src/pages/login.page'
 import { RegisterPage } from '@_src/pages/register.page'
 import { expect, test } from '@playwright/test'
 
@@ -14,20 +13,19 @@ test.describe('Verify register', () => {
     registerUserData = prepareRandomUser()
     await registerPage.goto()
   })
-  test('register with correct data and login @GAD_R03_01, @GAD_R03_02, @GAD_R03_03', async ({
-    page,
-  }) => {
+
+  test('register with correct data and login @GAD_R03_01, @GAD_R03_02, @GAD_R03_03', async ({}) => {
     //Arrange
     const expectedAlertPopUpText = 'User created'
-    const loginPage = new LoginPage(page)
-
-    //Act
-    await registerPage.register(registerUserData)
-
-    //Assert
     const expectedLoginTitle = 'Login'
     const expectedWelcomeTitle = 'Welcome'
+
+    //Act
+    const loginPage = await registerPage.register(registerUserData)
+
+    //Assert
     await expect(registerPage.alertPopUp).toHaveText(expectedAlertPopUpText)
+
     await loginPage.waitForPageToLoadUrl()
     const titleLogin = await loginPage.getTitle()
     expect.soft(titleLogin).toContain(expectedLoginTitle)
