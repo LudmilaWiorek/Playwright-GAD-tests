@@ -9,11 +9,10 @@ test.describe('Verify articles', () => {
   let articlesPage: ArticlesPage
 
   test.beforeEach(async ({ page }) => {
-    addArticleView = new AddArticleView(page)
     articlesPage = new ArticlesPage(page)
 
     await articlesPage.goto()
-    await articlesPage.addArticleButtonLogged.click()
+    addArticleView = await articlesPage.clickAddArticleButtonLogged()
 
     await expect.soft(addArticleView.addNewHeader).toBeVisible()
   })

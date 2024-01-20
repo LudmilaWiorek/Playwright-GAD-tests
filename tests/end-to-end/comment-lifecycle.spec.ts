@@ -16,14 +16,13 @@ test.describe('Create, verify and delete comment', () => {
   let editCommentView: EditCommentView
 
   test.beforeEach(async ({ page }) => {
-    addArticleView = new AddArticleView(page)
     articlesPage = new ArticlesPage(page)
     articlePage = new ArticlePage(page)
     editCommentView = new EditCommentView(page)
     articleData = prepareRandomNewArticle()
 
     await articlesPage.goto()
-    await articlesPage.addArticleButtonLogged.click()
+    addArticleView = await articlesPage.clickAddArticleButtonLogged()
     await addArticleView.createArticle(articleData)
   })
 
