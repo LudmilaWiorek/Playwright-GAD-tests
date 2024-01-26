@@ -1,5 +1,4 @@
 import { prepareRandomNewArticle } from '@_src/factories/article.factory'
-import { ArticlePage } from '@_src/pages/article.page'
 import { ArticlesPage } from '@_src/pages/articles.page'
 import { AddArticleView } from '@_src/views/add-article.view'
 import { expect, test } from '@playwright/test'
@@ -54,14 +53,11 @@ test.describe('Verify articles', () => {
       await expect(addArticleView.alertPopUp).toHaveText(expectedErrorMessage)
     })
 
-    test('create article with title equals 128 signs @GAD_R04_02  @logged', async ({
-      page,
-    }) => {
-      const articlePage = new ArticlePage(page)
+    test('create article with title equals 128 signs @GAD_R04_02  @logged', async () => {
       const articleData = prepareRandomNewArticle(128)
 
       // Act
-      await addArticleView.createArticle(articleData)
+      const articlePage = await addArticleView.createArticle(articleData)
 
       //Assert
       await expect.soft(articlePage.articleTitle).toHaveText(articleData.title)
