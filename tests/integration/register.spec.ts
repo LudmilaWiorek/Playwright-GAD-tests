@@ -1,20 +1,18 @@
 //faker-js/faker/locale/en - users english speaking; pl - polish etc
 import { prepareRandomUser } from '@_src/factories/user.factory'
+import { expect, test } from '@_src/fixtures/merge.fixture'
 import { RegisterUserModel } from '@_src/models/user.model'
-import { RegisterPage } from '@_src/pages/register.page'
-import { expect, test } from '@playwright/test'
 
 test.describe('Verify register', () => {
-  let registerPage: RegisterPage
   let registerUserData: RegisterUserModel
 
-  test.beforeEach(async ({ page }) => {
-    registerPage = new RegisterPage(page)
+  test.beforeEach(async () => {
     registerUserData = prepareRandomUser()
-    await registerPage.goto()
   })
 
-  test('register with correct data and login @GAD_R03_01, @GAD_R03_02, @GAD_R03_03', async ({}) => {
+  test('register with correct data and login @GAD_R03_01, @GAD_R03_02, @GAD_R03_03', async ({
+    registerPage,
+  }) => {
     //Arrange
     const expectedAlertPopUpText = 'User created'
     const expectedLoginTitle = 'Login'
@@ -40,7 +38,9 @@ test.describe('Verify register', () => {
     expect(titleWelcome).toContain(expectedWelcomeTitle)
   })
 
-  test('not register with incorrect email @GAD_R03_04', async () => {
+  test('not register with incorrect email @GAD_R03_04', async ({
+    registerPage,
+  }) => {
     //Arrange
     const expectedErrorText = 'Please provide a valid email address'
     registerUserData.userEmail = 'dfhsh#'
@@ -52,7 +52,9 @@ test.describe('Verify register', () => {
     await expect(registerPage.emailErrorText).toHaveText(expectedErrorText)
   })
 
-  test('not register with not touching empty email input @GAD_R03_04', async () => {
+  test('not register with not touching empty email input @GAD_R03_04', async ({
+    registerPage,
+  }) => {
     //Arrange
     const expectedErrorText = 'This field is required'
 
