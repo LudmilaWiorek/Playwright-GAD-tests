@@ -1,26 +1,18 @@
-import { prepareRandomNewArticle } from '@_src/factories/article.factory'
 import { prepareRandomComment } from '@_src/factories/comment.factory'
 import { expect, test } from '@_src/fixtures/merge.fixture'
-import { AddArticleModel } from '@_src/models/article.model'
 import { AddCommentModel } from '@_src/models/comment.model'
-import { ArticlePage } from '@_src/pages/article.page'
 
 test.describe('Create, verify and delete comment', () => {
-  let articleData: AddArticleModel
-  let articlePage: ArticlePage
-
-  test.beforeEach(async ({ addArticleView }) => {
-    articleData = prepareRandomNewArticle()
-    articlePage = await addArticleView.createArticle(articleData)
-  })
-
-  test('operate on comments @GAD_R05_01, @GAD_R05_02 @logged', async () => {
-    const expectedCommentCreatedPopup = 'Comment was created'
+  test('operate on comments @GAD_R05_01, @GAD_R05_02 @logged', async ({
+    createRandomArticle,
+  }) => {
     const newCommentData = prepareRandomComment()
+    let articlePage = createRandomArticle.articlePage
 
     await test.step('create new comment', async () => {
       //Arrange
       const expectedAddCommentHeader = 'Add New Comment'
+      const expectedCommentCreatedPopup = 'Comment was created'
 
       //Act
       const addCommentView = await articlePage.clickAddCommentButton()
@@ -77,7 +69,10 @@ test.describe('Create, verify and delete comment', () => {
     })
   })
 
-  test('user can add more than one comment to article @GAD_R05_03 @logged', async () => {
+  test('user can add more than one comment to article @GAD_R05_03 @logged', async ({
+    createRandomArticle,
+  }) => {
+    let articlePage = createRandomArticle.articlePage
     await test.step('create first comment', async () => {
       //Arrange
       const expectedCommentCreatedPopup = 'Comment was created'
