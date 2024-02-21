@@ -50,7 +50,7 @@ test.describe('Verify articles', () => {
 
   //attention: nested describe IN describe!
   test.describe('Verify title length', () => {
-    test('reject creating article with title exceeding 128 signs @GAD_R04_02  @logged', async ({
+    test('reject creating article with title exceeding 128 signs @GAD_R04_02 @GAD_R07_03 @logged', async ({
       addArticleView,
       page,
     }) => {
@@ -69,7 +69,7 @@ test.describe('Verify articles', () => {
       expect(response.status()).toBe(expectedResponseCode)
     })
 
-    test('create article with title equals 128 signs @GAD_R04_02  @logged', async ({
+    test('create article with title equals 128 signs @GAD_R04_02 @GAD_R07_03 @logged', async ({
       addArticleView,
       page,
     }) => {
