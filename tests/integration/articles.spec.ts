@@ -1,3 +1,4 @@
+import { RESPONSE_TIMEOUT } from '@_pw-config'
 import { prepareRandomNewArticle } from '@_src/factories/article.factory'
 import { expect, test } from '@_src/fixtures/merge.fixture'
 import { waitForResponse } from '@_src/utils/wait.util'
@@ -86,5 +87,31 @@ test.describe('Verify articles', () => {
       // expect(response.status()).toBe(expectedResponseCode) // leaving comment in purpose! :)
       expect(response.ok()).toBeTruthy()
     })
+  })
+
+  test('should return created article from API  @GAD_R07_04 @logged', async ({
+    addArticleView,
+    page,
+  }) => {
+    //Arrange
+    const articleData = prepareRandomNewArticle()
+    //function below must return true or false; found or not
+    const responsePromise = page.waitForResponse(
+      (response) => {
+        return (
+          response.url().includes('api/articles') &&
+          response.request().method() == 'GET'
+        )
+      },
+      { timeout: RESPONSE_TIMEOUT },
+    )
+
+    // Act
+    const articlePage = await addArticleView.createArticle(articleData)
+    const response = await responsePromise
+
+    //Assert
+    await expect.soft(articlePage.articleTitle).toHaveText(articleData.title)
+    expect(response.ok()).toBeTruthy()
   })
 })
