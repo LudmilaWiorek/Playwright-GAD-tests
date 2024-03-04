@@ -1,4 +1,3 @@
-import { RESPONSE_TIMEOUT } from '@_pw-config'
 import { prepareRandomNewArticle } from '@_src/factories/article.factory'
 import { expect, test } from '@_src/fixtures/merge.fixture'
 import { waitForResponse } from '@_src/utils/wait.util'
@@ -17,7 +16,7 @@ test.describe('Verify articles', () => {
     // const responsePromise = page.waitForResponse('api/articles', {
     //   timeout: RESPONSE_TIMEOUT,
     // }) //added timeout to cut timing of waiting (added also in pw.config)
-    const responsePromise = waitForResponse(page, '/api/articles')
+    const responsePromise = waitForResponse({ page, url: '/api/articles' })
     const expectedResponseCode = 422
 
     //Act
@@ -41,7 +40,7 @@ test.describe('Verify articles', () => {
 
     //Act
     await addArticleView.createArticle(articleData)
-    const responsePromise = waitForResponse(page, '/api/articles')
+    const responsePromise = waitForResponse({ page, url: '/api/articles' })
     const response = await responsePromise
 
     //Assert
@@ -62,7 +61,7 @@ test.describe('Verify articles', () => {
 
       // Act
       await addArticleView.createArticle(articleData)
-      const responsePromise = waitForResponse(page, '/api/articles')
+      const responsePromise = waitForResponse({ page, url: '/api/articles' })
       const response = await responsePromise
 
       //Assert
@@ -76,10 +75,9 @@ test.describe('Verify articles', () => {
     }) => {
       //Arrange
       const articleData = prepareRandomNewArticle(128)
-      // const expectedResponseCode = 201
       // Act
       const articlePage = await addArticleView.createArticle(articleData)
-      const responsePromise = waitForResponse(page, '/api/articles')
+      const responsePromise = waitForResponse({ page, url: '/api/articles' })
       const response = await responsePromise
 
       //Assert
@@ -95,16 +93,15 @@ test.describe('Verify articles', () => {
   }) => {
     //Arrange
     const articleData = prepareRandomNewArticle()
-    //function below must return true or false; found or not
-    const responsePromise = page.waitForResponse(
-      (response) => {
-        return (
-          response.url().includes('api/articles') &&
-          response.request().method() == 'GET'
-        )
-      },
-      { timeout: RESPONSE_TIMEOUT },
-    )
+
+    const waitParams = {
+      page,
+      url: '/api/articles',
+      method: 'GET',
+      text: articleData.title,
+    }
+
+    const responsePromise = waitForResponse(waitParams)
 
     // Act
     const articlePage = await addArticleView.createArticle(articleData)

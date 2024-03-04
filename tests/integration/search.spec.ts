@@ -7,13 +7,15 @@ test.describe('Verify search component for articles', () => {
     page,
   }) => {
     // Arrange
-    await expect(articlesPage.goSearchButton).toBeInViewport()
-    const responsePromise = waitForResponse(page, '/api/articles')
     const expectDefaultArticleNumber = 6
+    await expect(articlesPage.goSearchButton).toBeInViewport()
+    const responsePromise = waitForResponse({ page, url: '/api/articles' })
+
     // Act
     await articlesPage.goSearchButton.click()
     const response = await responsePromise
     const body = await response.json()
+
     // Assert
     expect(response.ok()).toBeTruthy() //method ok - check if response code is between 200-299
     expect(body).toHaveLength(expectDefaultArticleNumber)
