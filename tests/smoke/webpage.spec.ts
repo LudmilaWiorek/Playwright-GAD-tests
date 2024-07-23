@@ -2,10 +2,10 @@ import { expect, test } from '@_src/fixtures/merge.fixture'
 
 test.describe('Verify service main pages', () => {
   test('home page title @GAD-R01-01', async ({ homePage }) => {
-    // added tag bounded to requirements - run test using command: npx playwright test --grep @GAD-R01-01; tags are also visible on reports; if we want to run test with tag @GAD - we have to write: npx playwright test --grep "@GAD"
+    // added tag bounded to requirements - run test using command: npx playwright test --grep @GAD-R01-01;
+    // tags are also visible on reports; if we want to run test with tag @GAD - we have to write: npx playwright test --grep "@GAD"
     //Arrange
     const expectedHomePageTitle = 'GAD'
-
     //Assert
     const title = await homePage.getTitle()
     expect(title).toContain(expectedHomePageTitle)
@@ -22,9 +22,8 @@ test.describe('Verify service main pages', () => {
   test('comments page title @GAD-R01-02', async ({ commentsPage }) => {
     //Arrange
     const expectedCommentsTitle = 'Comments'
-
-    //Assert
     const title = await commentsPage.getTitle()
+    //Assert
     expect(title).toContain(expectedCommentsTitle)
   })
 

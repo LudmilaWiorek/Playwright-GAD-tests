@@ -26,4 +26,36 @@ test.describe('Verify articles API endpoints @GAD-R08-01 @api', () => {
       expectedMinArticleCount,
     )
   })
+
+  test('GET articles should return article object @predefined_data', async ({
+    request,
+  }) => {
+    // Arrange
+    const articlesUrl = '/api/articles'
+    const expectedRequiredFields = [
+      'id',
+      'user_id',
+      'title',
+      'body',
+      'date',
+      'image',
+    ]
+    // Act
+    const response = await request.get(articlesUrl)
+    const responseJSON = await response.json()
+    const article = responseJSON[0]
+    // Assert
+    // properties can be easy checked in documentation -> schema
+    // expect.soft(article).toHaveProperty('user_id')
+    // expect.soft(article).toHaveProperty('title')
+    // expect.soft(article).toHaveProperty('body')
+    // expect.soft(article).toHaveProperty('date')
+    // expect.soft(article).toHaveProperty('image')
+
+    // instead of checking every field separately, we make nice forEach loop
+    expectedRequiredFields.forEach((key) => {
+      expect.soft(article).toHaveProperty(key)
+    })
+    // NOTE: careful with assertions - sometimes they don't prove everything went well!
+  })
 })
