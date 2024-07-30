@@ -17,7 +17,6 @@ test.describe('Verify articles API endpoints @GAD-R08-01 @api', () => {
     }) => {
       // Arrange
       const expectedMinArticleCount = 1
-      // useful tip: check for numbers 1000 or on empty database [in our case: there is a bookmark in application that reset database]
       const articlesUrl = '/api/articles'
       // Act
       const response = await request.get(articlesUrl)
@@ -46,18 +45,9 @@ test.describe('Verify articles API endpoints @GAD-R08-01 @api', () => {
       const responseJSON = await response.json()
       const article = responseJSON[0]
       // Assert
-      // properties can be easy checked in documentation -> schema
-      // expect.soft(article).toHaveProperty('user_id')
-      // expect.soft(article).toHaveProperty('title')
-      // expect.soft(article).toHaveProperty('body')
-      // expect.soft(article).toHaveProperty('date')
-      // expect.soft(article).toHaveProperty('image')
-
-      // instead of checking every field separately, we make nice forEach loop
       expectedRequiredFields.forEach((key) => {
         expect.soft(article).toHaveProperty(key)
       })
-      // NOTE: careful with assertions - sometimes they don't prove everything went well!
     })
   })
 
@@ -66,7 +56,6 @@ test.describe('Verify articles API endpoints @GAD-R08-01 @api', () => {
   }) => {
     const articlesUrl = '/api/articles'
     const response = await request.get(articlesUrl)
-    //we remind the structure of test steps
     await test.step('GET articles returns status code 200', async () => {
       const expectedStatusCode = 200
 
@@ -81,7 +70,6 @@ test.describe('Verify articles API endpoints @GAD-R08-01 @api', () => {
         expectedMinArticleCount,
       )
     })
-
     const expectedRequiredFields = [
       'id',
       'user_id',
