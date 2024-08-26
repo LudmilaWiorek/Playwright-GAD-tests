@@ -37,10 +37,11 @@ test.describe('Verify articles CRUD operations @api @GAD-R08-03', () => {
     //Authorization access token is taken from documentary Swagger!
     const headers = {
       Authorization: `Bearer ${responseLoginJSON.access_token}`,
-      // header below is temporary! it's prototype for this particular test.
-      //   Authorization:
-      //     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkRhbmlhbC5EaWNraUBkaWNraS50ZXN0IiwiZGF0YSI6IlRCRCIsImlhdCI6MTcyMjMzMzMxNSwiZXhwIjoxNzIyMzM2OTE1fQ.foaDPlXvrKZ_gi_kBvBXWmIuFzsXt38Di3wuMDzuNw8',
     }
+    // header below is temporary! it's prototype for this particular test.
+    //   Authorization:
+    //     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkRhbmlhbC5EaWNraUBkaWNraS50ZXN0IiwiZGF0YSI6IlRCRCIsImlhdCI6MTcyMjMzMzMxNSwiZXhwIjoxNzIyMzM2OTE1fQ.foaDPlXvrKZ_gi_kBvBXWmIuFzsXt38Di3wuMDzuNw8',
+
     //Act
     const articlesUrl = '/api/articles'
     const randomArticleData = prepareRandomNewArticle()
@@ -59,7 +60,7 @@ test.describe('Verify articles CRUD operations @api @GAD-R08-03', () => {
     const actualResponseStatus = responseArticle.status()
     expect(
       actualResponseStatus,
-      `status code expected ${expectedStatusCode}, but received ${actualResponseStatus}`,
+      `expect status code ${expectedStatusCode}, received ${actualResponseStatus}`,
     ).toBe(expectedStatusCode)
 
     const article = await responseArticle.json()
