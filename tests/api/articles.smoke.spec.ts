@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-test.describe('Verify articles API endpoints @GAD-R08-01 @api', () => {
+test.describe('Verify articles API endpoints @GAD-R08-01 @smoke', () => {
   test.describe('verify each condition in separate test', () => {
     test('GET articles returns status code 200 ', async ({ request }) => {
       // Arrange

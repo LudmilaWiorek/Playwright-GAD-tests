@@ -3,7 +3,7 @@ import { prepareRandomComment } from '@_src/factories/comment.factory'
 import { testUser2 } from '@_src/test-data/user-data'
 import { expect, test } from '@playwright/test'
 
-test.describe('Verify comments CRUD operations @api @GAD-R09-02', () => {
+test.describe('Verify comments CRUD operations @crud @GAD-R09-02', () => {
   let headers: { [key: string]: string }
   let articleId: number
   let articleData: {
