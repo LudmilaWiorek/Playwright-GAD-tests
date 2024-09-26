@@ -1,5 +1,5 @@
 import { prepareRandomNewArticle } from '@_src/factories/article.factory'
-import { testUser2 } from '@_src/test-data/user-data'
+import { getAuthorizationHeader } from '@_src/utils/api.util'
 import { expect, test } from '@playwright/test'
 
 test.describe('Verify articles CRUD operations @crud @GAD-R08-03', () => {
@@ -23,25 +23,9 @@ test.describe('Verify articles CRUD operations @crud @GAD-R08-03', () => {
     expect(response.status()).toBe(expectedStatusCode)
   })
   test('should create an article with logged-in user', async ({ request }) => {
-    // LOGIN
     //Arrange
     const expectedStatusCode = 201
-    const loginUrl = '/api/login'
-    const userData = {
-      email: testUser2.userEmail,
-      password: testUser2.userPassword,
-    }
-    const responseLogin = await request.post(loginUrl, { data: userData })
-    const responseLoginJSON = await responseLogin.json()
-
-    //Authorization access token is taken from documentary Swagger!
-    const headers = {
-      Authorization: `Bearer ${responseLoginJSON.access_token}`,
-    }
-    // header below is temporary! it's prototype for this particular test.
-    //   Authorization:
-    //     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkRhbmlhbC5EaWNraUBkaWNraS50ZXN0IiwiZGF0YSI6IlRCRCIsImlhdCI6MTcyMjMzMzMxNSwiZXhwIjoxNzIyMzM2OTE1fQ.foaDPlXvrKZ_gi_kBvBXWmIuFzsXt38Di3wuMDzuNw8',
-
+    const headers = await getAuthorizationHeader(request)
     //Act
     const articlesUrl = '/api/articles'
     const randomArticleData = prepareRandomNewArticle()

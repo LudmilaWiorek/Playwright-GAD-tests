@@ -1,6 +1,6 @@
 import { prepareRandomNewArticle } from '@_src/factories/article.factory'
 import { prepareRandomComment } from '@_src/factories/comment.factory'
-import { testUser2 } from '@_src/test-data/user-data'
+import { getAuthorizationHeader } from '@_src/utils/api.util'
 import { expect, test } from '@playwright/test'
 
 test.describe('Verify comments CRUD operations @crud @GAD-R09-02', () => {
@@ -10,19 +10,7 @@ test.describe('Verify comments CRUD operations @crud @GAD-R09-02', () => {
     [key: string]: string
   }
   test.beforeAll('login and create article', async ({ request }) => {
-    //login
-    const loginUrl = '/api/login'
-    const userData = {
-      email: testUser2.userEmail,
-      password: testUser2.userPassword,
-    }
-    const responseLogin = await request.post(loginUrl, { data: userData })
-    const responseLoginJSON = await responseLogin.json()
-
-    headers = {
-      Authorization: `Bearer ${responseLoginJSON.access_token}`,
-    }
-
+    headers = await getAuthorizationHeader(request)
     //create article
     const articlesUrl = '/api/articles'
     const randomArticleData = prepareRandomNewArticle()
