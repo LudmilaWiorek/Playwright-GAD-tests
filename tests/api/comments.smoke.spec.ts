@@ -1,12 +1,12 @@
+import { apiLinks } from '@_src/utils/api.util'
 import { expect, test } from '@playwright/test'
 
 test.describe('Verify comments API endpoints @GAD-R08-02 @smoke', () => {
   test.describe('verify each condition in separate test', () => {
     test('GET comments returns status code 200 ', async ({ request }) => {
       const expectedStatusCode = 200
-      const commentsUrl = 'api/comments'
       //Act
-      const response = await request.get(commentsUrl)
+      const response = await request.get(apiLinks.commentsUrl)
       //Assert
       expect(response.status()).toBe(expectedStatusCode)
     })
@@ -15,9 +15,9 @@ test.describe('Verify comments API endpoints @GAD-R08-02 @smoke', () => {
       request,
     }) => {
       const expectedMinCommentsCount = 1
-      const commentsUrl = '/api/comments'
+
       // Act
-      const response = await request.get(commentsUrl)
+      const response = await request.get(apiLinks.commentsUrl)
       const responseJSON = await response.json()
       // Assert
       expect([responseJSON].length).toBeGreaterThanOrEqual(
@@ -29,7 +29,6 @@ test.describe('Verify comments API endpoints @GAD-R08-02 @smoke', () => {
     request,
   }) => {
     //Arrange
-    const commentsUrl = '/api/comments'
     const expectedResponseBodyFields = [
       'id',
       'article_id',
@@ -38,7 +37,7 @@ test.describe('Verify comments API endpoints @GAD-R08-02 @smoke', () => {
       'date',
     ]
     //Act
-    const response = await request.get(commentsUrl)
+    const response = await request.get(apiLinks.commentsUrl)
     const responseJSON = await response.json()
     const comment = responseJSON[0]
     //Assert

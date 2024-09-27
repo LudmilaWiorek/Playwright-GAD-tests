@@ -1,3 +1,4 @@
+import { apiLinks } from '@_src/utils/api.util'
 import { expect, test } from '@playwright/test'
 
 test.describe('Verify articles API endpoints @GAD-R08-01 @smoke', () => {
@@ -5,9 +6,9 @@ test.describe('Verify articles API endpoints @GAD-R08-01 @smoke', () => {
     test('GET articles returns status code 200 ', async ({ request }) => {
       // Arrange
       const expectedStatusCode = 200
-      const articlesUrl = '/api/articles'
+
       // Act
-      const response = await request.get(articlesUrl)
+      const response = await request.get(apiLinks.articlesUrl)
       //Assert
       expect(response.status()).toBe(expectedStatusCode)
     })
@@ -17,9 +18,8 @@ test.describe('Verify articles API endpoints @GAD-R08-01 @smoke', () => {
     }) => {
       // Arrange
       const expectedMinArticleCount = 1
-      const articlesUrl = '/api/articles'
       // Act
-      const response = await request.get(articlesUrl)
+      const response = await request.get(apiLinks.articlesUrl)
       const responseJSON = await response.json()
       // Assert
       expect([responseJSON].length).toBeGreaterThanOrEqual(
@@ -31,7 +31,6 @@ test.describe('Verify articles API endpoints @GAD-R08-01 @smoke', () => {
       request,
     }) => {
       // Arrange
-      const articlesUrl = '/api/articles'
       const expectedRequiredFields = [
         'id',
         'user_id',
@@ -41,7 +40,7 @@ test.describe('Verify articles API endpoints @GAD-R08-01 @smoke', () => {
         'image',
       ]
       // Act
-      const response = await request.get(articlesUrl)
+      const response = await request.get(apiLinks.articlesUrl)
       const responseJSON = await response.json()
       const article = responseJSON[0]
       // Assert
@@ -54,8 +53,7 @@ test.describe('Verify articles API endpoints @GAD-R08-01 @smoke', () => {
   test('GET articles should return an object with required fields @predefined_data ', async ({
     request,
   }) => {
-    const articlesUrl = '/api/articles'
-    const response = await request.get(articlesUrl)
+    const response = await request.get(apiLinks.articlesUrl)
     await test.step('GET articles returns status code 200', async () => {
       const expectedStatusCode = 200
 
