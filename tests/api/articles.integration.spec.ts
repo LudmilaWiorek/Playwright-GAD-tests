@@ -1,5 +1,7 @@
-import { prepareRandomNewArticle } from '@_src/factories/article.factory'
-import { getAuthorizationHeader } from '@_src/utils/api.util'
+import {
+  getAuthorizationHeader,
+  prepareArticlePayload,
+} from '@_src/utils/api.util'
 import { expect, test } from '@playwright/test'
 
 test.describe('Verify articles CRUD operations @crud @GAD-R08-03', () => {
@@ -10,13 +12,7 @@ test.describe('Verify articles CRUD operations @crud @GAD-R08-03', () => {
     const expectedStatusCode = 401
 
     const articlesUrl = '/api/articles'
-    const randomArticleData = prepareRandomNewArticle()
-    const articleData = {
-      title: randomArticleData.title,
-      body: randomArticleData.body,
-      date: '2024-06-30T15:44:31Z',
-      image: '',
-    }
+    const articleData = prepareArticlePayload() // import function from api.utils
 
     const response = await request.post(articlesUrl, { data: articleData })
     //Assert
@@ -28,13 +24,7 @@ test.describe('Verify articles CRUD operations @crud @GAD-R08-03', () => {
     const headers = await getAuthorizationHeader(request)
     //Act
     const articlesUrl = '/api/articles'
-    const randomArticleData = prepareRandomNewArticle()
-    const articleData = {
-      title: randomArticleData.title,
-      body: randomArticleData.body,
-      date: '2024-06-30T15:44:31Z',
-      image: '.\\data\\images\\256\\andrew-svk-nQvFebPtqbw-unsplash.jpg',
-    }
+    const articleData = prepareArticlePayload() // import function from api.utils
 
     const responseArticle = await request.post(articlesUrl, {
       headers,

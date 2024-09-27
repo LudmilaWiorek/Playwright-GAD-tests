@@ -1,6 +1,8 @@
-import { prepareRandomNewArticle } from '@_src/factories/article.factory'
 import { prepareRandomComment } from '@_src/factories/comment.factory'
-import { getAuthorizationHeader } from '@_src/utils/api.util'
+import {
+  getAuthorizationHeader,
+  prepareArticlePayload,
+} from '@_src/utils/api.util'
 import { expect, test } from '@playwright/test'
 
 test.describe('Verify comments CRUD operations @crud @GAD-R09-02', () => {
@@ -11,18 +13,10 @@ test.describe('Verify comments CRUD operations @crud @GAD-R09-02', () => {
   }
   test.beforeAll('login and create article', async ({ request }) => {
     headers = await getAuthorizationHeader(request)
-    //create article
-    const articlesUrl = '/api/articles'
-    const randomArticleData = prepareRandomNewArticle()
 
-    const date = new Date()
-    articleData = {
-      title: randomArticleData.title,
-      body: randomArticleData.body,
-      //special format of date so it's not hardcoded
-      date: date.toISOString(),
-      image: '.\\data\\images\\256\\andrew-svk-nQvFebPtqbw-unsplash.jpg',
-    }
+    const articlesUrl = '/api/articles'
+    const articleData = prepareArticlePayload() // import function from api.utils
+
     const responseArticle = await request.post(articlesUrl, {
       headers,
       data: articleData,
@@ -41,7 +35,7 @@ test.describe('Verify comments CRUD operations @crud @GAD-R09-02', () => {
     const randomCommentData = prepareRandomComment()
     const commentData = {
       body: randomCommentData.body,
-      date: articleData.date,
+      date: '2024-01-30T15:44:31Z',
     }
 
     const response = await request.post(commentsUrl, { data: commentData })
@@ -56,11 +50,10 @@ test.describe('Verify comments CRUD operations @crud @GAD-R09-02', () => {
     //Act
     const commentsUrl = '/api/comments'
     const randomCommentData = prepareRandomComment()
-
     const commentData = {
       article_id: articleId,
       body: randomCommentData.body,
-      date: articleData.date,
+      date: '2024-01-30T15:44:31Z',
     }
     const responseComment = await request.post(commentsUrl, {
       headers,
