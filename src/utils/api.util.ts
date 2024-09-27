@@ -1,4 +1,5 @@
 import { prepareRandomNewArticle } from '@_src/factories/article.factory'
+import { prepareRandomComment } from '@_src/factories/comment.factory'
 import { testUser2 } from '@_src/test-data/user-data'
 import { APIRequestContext } from '@playwright/test'
 
@@ -41,4 +42,18 @@ export function prepareArticlePayload(): ArticlePayload {
     image: '.\\data\\images\\256\\andrew-svk-nQvFebPtqbw-unsplash.jpg',
   }
   return articleData
+}
+interface CommentPayload {
+  article_id: number
+  body: string
+  date: string
+}
+export function prepareCommentPayload(articleId: number): CommentPayload {
+  const randomCommentData = prepareRandomComment()
+  const commentData = {
+    article_id: articleId,
+    body: randomCommentData.body,
+    date: '2024-01-30T15:44:31Z',
+  }
+  return commentData
 }

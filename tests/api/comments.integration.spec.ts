@@ -1,7 +1,7 @@
-import { prepareRandomComment } from '@_src/factories/comment.factory'
 import {
   getAuthorizationHeader,
   prepareArticlePayload,
+  prepareCommentPayload,
 } from '@_src/utils/api.util'
 import { expect, test } from '@playwright/test'
 
@@ -30,11 +30,7 @@ test.describe('Verify comments CRUD operations @crud @GAD-R09-02', () => {
     const expectedStatusCode = 401
     const commentsUrl = '/api/comments'
 
-    const randomCommentData = prepareRandomComment()
-    const commentData = {
-      body: randomCommentData.body,
-      date: '2024-01-30T15:44:31Z',
-    }
+    const commentData = prepareCommentPayload(articleId)
 
     const response = await request.post(commentsUrl, { data: commentData })
     //Assert
@@ -47,12 +43,7 @@ test.describe('Verify comments CRUD operations @crud @GAD-R09-02', () => {
 
     //Act
     const commentsUrl = '/api/comments'
-    const randomCommentData = prepareRandomComment()
-    const commentData = {
-      article_id: articleId,
-      body: randomCommentData.body,
-      date: '2024-01-30T15:44:31Z',
-    }
+    const commentData = prepareCommentPayload(articleId)
     const responseComment = await request.post(commentsUrl, {
       headers,
       data: commentData,
