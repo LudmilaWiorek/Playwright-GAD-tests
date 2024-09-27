@@ -8,9 +8,7 @@ import { expect, test } from '@playwright/test'
 test.describe('Verify comments CRUD operations @crud @GAD-R09-02', () => {
   let headers: { [key: string]: string }
   let articleId: number
-  let articleData: {
-    [key: string]: string
-  }
+
   test.beforeAll('login and create article', async ({ request }) => {
     headers = await getAuthorizationHeader(request)
 
