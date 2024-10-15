@@ -10,7 +10,7 @@ test.describe('Verify comments CRUD operations @crud @GAD-R09-02', () => {
   let headers: { [key: string]: string }
   let articleId: number
 
-  test.beforeAll('login and create article', async ({ request }) => {
+  test.beforeAll('create article', async ({ request }) => {
     headers = await getAuthorizationHeader(request)
 
     const articleData = prepareArticlePayload() // import function from api.utils
@@ -24,7 +24,7 @@ test.describe('Verify comments CRUD operations @crud @GAD-R09-02', () => {
     // let's get article id, that we'll need to verify adding comment later to
     articleId = article.id
   })
-  test('should not add comment without a logged-in user', async ({
+  test('should not create a comment without a logged-in user @GAD-R08-04', async ({
     request,
   }) => {
     const expectedStatusCode = 401

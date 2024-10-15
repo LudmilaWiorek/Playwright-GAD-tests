@@ -9,6 +9,7 @@ test.describe('Verify articles API endpoints @GAD-R08-01 @smoke', () => {
 
       // Act
       const response = await request.get(apiLinks.articlesUrl)
+
       //Assert
       expect(response.status()).toBe(expectedStatusCode)
     })
@@ -17,13 +18,13 @@ test.describe('Verify articles API endpoints @GAD-R08-01 @smoke', () => {
       request,
     }) => {
       // Arrange
-      const expectedMinArticleCount = 1
+      const expectedMinArticlesCount = 1
       // Act
       const response = await request.get(apiLinks.articlesUrl)
       const responseJSON = await response.json()
       // Assert
       expect([responseJSON].length).toBeGreaterThanOrEqual(
-        expectedMinArticleCount,
+        expectedMinArticlesCount,
       )
     })
 

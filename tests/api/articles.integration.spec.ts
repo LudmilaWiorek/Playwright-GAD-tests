@@ -61,7 +61,7 @@ test.describe('Verify articles CRUD operations @crud ', () => {
 
     // DELETE
 
-    test('should delete an article with logged-in user GAD-R08-05', async ({
+    test('should delete an article with logged-in user @GAD-R08-05', async ({
       request,
     }) => {
       await new Promise((resolve) => setTimeout(resolve, 5000)) // huge technical debt!!! we will work on this in future :)
@@ -97,7 +97,7 @@ test.describe('Verify articles CRUD operations @crud ', () => {
       ).toBe(expectedDeletedArticleStatusCode)
     })
 
-    test('should not delete an article with non logged-in user GAD-R08-05', async ({
+    test('should not delete an article with non logged-in user @GAD-R08-05', async ({
       request,
     }) => {
       await new Promise((resolve) => setTimeout(resolve, 5000))
@@ -121,11 +121,11 @@ test.describe('Verify articles CRUD operations @crud ', () => {
         `${apiLinks.articlesUrl}/${articleId}`,
       )
 
-      const expectedDeletedArticleStatusCode = 200
+      const expectedNotDeletedArticleStatusCode = 200
       expect(
         responseArticleGet.status(),
-        `expect status code ${expectedDeletedArticleStatusCode}, received ${responseArticleGet.status()}`,
-      ).toBe(expectedDeletedArticleStatusCode)
+        `expect status code ${expectedNotDeletedArticleStatusCode}, received ${responseArticleGet.status()}`,
+      ).toBe(expectedNotDeletedArticleStatusCode)
     })
   })
 })
