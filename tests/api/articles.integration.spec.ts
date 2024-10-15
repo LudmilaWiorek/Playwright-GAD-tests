@@ -7,8 +7,8 @@ import {
 } from '@_src/utils/api.util'
 import { APIResponse, expect, test } from '@playwright/test'
 
-test.describe('Verify articles CRUD operations @crud @GAD-R08-03', () => {
-  test('should not create an article without a logged-in user', async ({
+test.describe('Verify articles CRUD operations @crud ', () => {
+  test('should not create an article without a logged-in user @GAD-R08-03', async ({
     request,
   }) => {
     // Arrange
