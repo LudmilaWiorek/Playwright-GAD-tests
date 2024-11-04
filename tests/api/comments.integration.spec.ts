@@ -24,7 +24,20 @@ test.describe('Verify comments CRUD operations @crud', () => {
     const article = await responseArticle.json()
     // let's get article id, that we'll need to verify adding comment later to
     articleId = article.id
+
+    const expectedStatusCode = 200
+    // assert article just in case
+    await expect(async () => {
+      const responseArticleCreated = await request.get(
+        `${apiLinks.articlesUrl}/${articleId}`,
+      )
+      expect(
+        responseArticleCreated.status(),
+        `Expected status: ${expectedStatusCode} and observed: ${responseArticleCreated}`,
+      ).toBe(expectedStatusCode)
+    }).toPass()
   })
+
   test('should not create a comment without a logged-in user @GAD-R08-04', async ({
     request,
   }) => {
@@ -48,7 +61,18 @@ test.describe('Verify comments CRUD operations @crud', () => {
         headers,
         data: commentData,
       })
-      await new Promise((resolve) => setTimeout(resolve, 5000))
+      const commentJson = await responseComment.json()
+      // await new Promise((resolve) => setTimeout(resolve, 5000))
+      await expect(async () => {
+        const responseCommentCreated = await request.get(
+          `${apiLinks.commentsUrl}/${commentJson.id}`,
+        )
+        const expectedStatusCode = 200
+        expect(
+          responseCommentCreated.status(),
+          `Expected status: ${expectedStatusCode} and observed: ${responseCommentCreated.status()}`,
+        ).toBe(expectedStatusCode)
+      }).toPass({ timeout: 2_000 })
     })
 
     test('should create a comment with logged-in user @GAD-R08-04', async () => {
