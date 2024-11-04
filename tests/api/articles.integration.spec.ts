@@ -40,7 +40,22 @@ test.describe('Verify articles CRUD operations @crud ', () => {
         headers,
         data: articleData,
       })
+
+      //assert article exists
+      const articleJson = await responseArticle.json()
+
+      await expect(async () => {
+        const responseArticleCreated = await request.get(
+          `${apiLinks.articlesUrl}/${articleJson.id}`,
+        )
+        const expectedStatusCode = 200
+        expect(
+          responseArticleCreated.status(),
+          `Expected status: ${expectedStatusCode} and observed: ${responseArticleCreated.status()}`,
+        ).toBe(expectedStatusCode) // if that assert will fail, function will repeat all steps
+      }).toPass({ timeout: 2_000 }) //  add steps in function, and assert, and we want it to end successfully; timeout 2s says playwright has 2 sec to finish operations here, not 60, like we have in playwrightconfig.
     })
+
     // CREATE
     test('should create an article with logged-in user @GAD-R08-03', async () => {
       // verify if operation from beforeEach succeed
@@ -64,7 +79,7 @@ test.describe('Verify articles CRUD operations @crud ', () => {
     test('should delete an article with logged-in user @GAD-R08-05', async ({
       request,
     }) => {
-      await new Promise((resolve) => setTimeout(resolve, 5000)) // huge technical debt!!! we will work on this in future :)
+      // await new Promise((resolve) => setTimeout(resolve, 5000)) // huge technical debt!!! we will work on this in future :)
       //Arrange
       const expectedStatusCode = 200
       const articleJson = await responseArticle.json()
@@ -100,7 +115,6 @@ test.describe('Verify articles CRUD operations @crud ', () => {
     test('should not delete an article with non logged-in user @GAD-R08-05', async ({
       request,
     }) => {
-      await new Promise((resolve) => setTimeout(resolve, 5000))
       //Arrange
       const expectedStatusCode = 401
       const articleJson = await responseArticle.json()
