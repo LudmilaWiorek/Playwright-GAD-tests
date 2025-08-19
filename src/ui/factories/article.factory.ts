@@ -1,4 +1,4 @@
-import { AddArticleModel } from '@_src/models/article.model'
+import { AddArticleModel } from '@_src/ui/models/article.model'
 import { faker } from '@faker-js/faker/locale/en'
 
 export function prepareRandomNewArticle(
@@ -15,4 +15,6 @@ export function prepareRandomNewArticle(
   const newArticle: AddArticleModel = { title: title, body: body }
 
   return newArticle
-} // possible to  split this function on two parts: fill title, fill body, for now we leave randomNewArticle with two options.
+} // possible to  split this function on two parts:
+// fill title, fill body,
+// for now we leave randomNewArticle with two options.

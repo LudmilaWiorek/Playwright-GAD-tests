@@ -1,6 +1,6 @@
-import { prepareRandomComment } from '@_src/factories/comment.factory'
-import { expect, test } from '@_src/fixtures/merge.fixture'
-import { waitForResponse } from '@_src/utils/wait.util'
+import { prepareRandomComment } from '@_src/ui/factories/comment.factory'
+import { expect, test } from '@_src/ui/fixtures/merge.fixture'
+import { waitForResponse } from '@_src/ui/utils/wait.util'
 
 test.describe('Verify comment', () => {
   test('should return created comment - API validation @GAD_R07_06 @logged', async ({

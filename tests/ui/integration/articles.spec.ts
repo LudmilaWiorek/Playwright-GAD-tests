@@ -1,6 +1,6 @@
-import { prepareRandomNewArticle } from '@_src/factories/article.factory'
-import { expect, test } from '@_src/fixtures/merge.fixture'
-import { waitForResponse } from '@_src/utils/wait.util'
+import { prepareRandomNewArticle } from '@_src/ui/factories/article.factory'
+import { expect, test } from '@_src/ui/fixtures/merge.fixture'
+import { waitForResponse } from '@_src/ui/utils/wait.util'
 
 test.describe('Verify articles', () => {
   test('reject creating new article without title @GAD_R04_01 @GAD_R07_03 @logged', async ({

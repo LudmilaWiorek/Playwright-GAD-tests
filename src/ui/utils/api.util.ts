@@ -1,6 +1,6 @@
-import { prepareRandomNewArticle } from '@_src/factories/article.factory'
-import { prepareRandomComment } from '@_src/factories/comment.factory'
-import { testUser2 } from '@_src/test-data/user-data'
+import { prepareRandomNewArticle } from '@_src/ui/factories/article.factory'
+import { prepareRandomComment } from '@_src/ui/factories/comment.factory'
+import { testUser2 } from '@_src/ui/test-data/user-data'
 import { APIRequestContext } from '@playwright/test'
 
 export const apiLinks = {

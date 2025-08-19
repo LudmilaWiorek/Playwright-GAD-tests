@@ -1,7 +1,7 @@
 //faker-js/faker/locale/en - users english speaking; pl - polish etc
-import { prepareRandomUser } from '@_src/factories/user.factory'
-import { expect, test } from '@_src/fixtures/merge.fixture'
-import { RegisterUserModel } from '@_src/models/user.model'
+import { prepareRandomUser } from '@_src/ui/factories/user.factory'
+import { expect, test } from '@_src/ui/fixtures/merge.fixture'
+import { RegisterUserModel } from '@_src/ui/models/user.model'
 
 test.describe('Verify register', () => {
   let registerUserData: RegisterUserModel
