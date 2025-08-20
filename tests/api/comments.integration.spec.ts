@@ -1,5 +1,6 @@
 import { createArticleWithApi } from '@_src/api/factories/article-create.api.factory'
 import { getAuthorizationHeader } from '@_src/api/factories/authorization-header.api.factory'
+import { createCommentWithApi } from '@_src/api/factories/comment-create.api.factory'
 import { prepareCommentPayload } from '@_src/api/factories/comment-payload.api.factory'
 import { CommentPayload } from '@_src/api/models/comment.api.model'
 import { Headers } from '@_src/api/models/headers.api.model'
@@ -38,22 +39,12 @@ test.describe('Verify comments CRUD operations @crud', () => {
 
     test.beforeEach('create a comment', async ({ request }) => {
       commentData = prepareCommentPayload(articleId)
-      responseComment = await request.post(apiUrls.commentsUrl, {
+      responseComment = await createCommentWithApi(
+        request,
         headers,
-        data: commentData,
-      })
-      const commentJson = await responseComment.json()
-      // await new Promise((resolve) => setTimeout(resolve, 5000))
-      await expect(async () => {
-        const responseCommentCreated = await request.get(
-          `${apiUrls.commentsUrl}/${commentJson.id}`,
-        )
-        const expectedStatusCode = 200
-        expect(
-          responseCommentCreated.status(),
-          `Expected status: ${expectedStatusCode} and observed: ${responseCommentCreated.status()}`,
-        ).toBe(expectedStatusCode)
-      }).toPass({ timeout: 2_000 })
+        articleId,
+        commentData,
+      )
     })
 
     test('should create a comment with logged-in user @GAD-R08-04', async () => {
