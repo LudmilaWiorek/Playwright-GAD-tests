@@ -3,9 +3,9 @@ import {
   Headers,
   apiLinks,
   getAuthorizationHeader,
-  prepareArticlePayload,
   prepareCommentPayload,
 } from '@_src/api/utils/api.util'
+import { prepareArticlePayload } from '@_src/factories/article-payload.api.factory'
 import { APIResponse, expect, test } from '@playwright/test'
 
 test.describe('Verify comments CRUD operations @crud', () => {
