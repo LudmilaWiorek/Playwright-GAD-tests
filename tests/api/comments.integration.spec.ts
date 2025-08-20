@@ -5,7 +5,7 @@ import {
   getAuthorizationHeader,
   prepareArticlePayload,
   prepareCommentPayload,
-} from '@_src/ui/utils/api.util'
+} from '@_src/api/utils/api.util'
 import { APIResponse, expect, test } from '@playwright/test'
 
 test.describe('Verify comments CRUD operations @crud', () => {

@@ -4,7 +4,7 @@ import {
   apiLinks,
   getAuthorizationHeader,
   prepareArticlePayload,
-} from '@_src/ui/utils/api.util'
+} from '@_src/api/utils/api.util'
 import { APIResponse, expect, test } from '@playwright/test'
 
 test.describe('Verify articles CRUD operations @crud ', () => {

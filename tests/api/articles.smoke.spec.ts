@@ -1,4 +1,4 @@
-import { apiLinks } from '@_src/ui/utils/api.util'
+import { apiLinks } from '@_src/api/utils/api.util'
 import { expect, test } from '@playwright/test'
 
 test.describe('Verify articles API endpoints @GAD-R08-01 @smoke', () => {
