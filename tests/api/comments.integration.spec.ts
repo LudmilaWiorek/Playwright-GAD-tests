@@ -1,11 +1,8 @@
-import {
-  CommentPayload,
-  Headers,
-  apiLinks,
-  getAuthorizationHeader,
-} from '@_src/api/utils/api.util'
-import { prepareArticlePayload } from '@_src/factories/article-payload.api.factory'
-import { prepareCommentPayload } from '@_src/factories/comment-payload.api.factory'
+import { prepareArticlePayload } from '@_src/api/factories/article-payload.api.factory'
+import { getAuthorizationHeader } from '@_src/api/factories/authorization-header.api.factory'
+import { prepareCommentPayload } from '@_src/api/factories/comment-payload.api.factory'
+import { CommentPayload } from '@_src/api/models/comment.api.model'
+import { Headers, apiUrls } from '@_src/api/utils/api.util'
 import { APIResponse, expect, test } from '@playwright/test'
 
 test.describe('Verify comments CRUD operations @crud', () => {
@@ -16,7 +13,7 @@ test.describe('Verify comments CRUD operations @crud', () => {
     headers = await getAuthorizationHeader(request)
     const articleData = prepareArticlePayload() // import function from api.utils
 
-    const responseArticle = await request.post(apiLinks.articlesUrl, {
+    const responseArticle = await request.post(apiUrls.articlesUrl, {
       headers,
       data: articleData,
     })
@@ -29,7 +26,7 @@ test.describe('Verify comments CRUD operations @crud', () => {
     // assert article just in case
     await expect(async () => {
       const responseArticleCreated = await request.get(
-        `${apiLinks.articlesUrl}/${articleId}`,
+        `${apiUrls.articlesUrl}/${articleId}`,
       )
       expect(
         responseArticleCreated.status(),
@@ -44,7 +41,7 @@ test.describe('Verify comments CRUD operations @crud', () => {
     const expectedStatusCode = 401
     const commentData = prepareCommentPayload(articleId)
 
-    const response = await request.post(apiLinks.commentsUrl, {
+    const response = await request.post(apiUrls.commentsUrl, {
       data: commentData,
     })
     //Assert
@@ -57,7 +54,7 @@ test.describe('Verify comments CRUD operations @crud', () => {
 
     test.beforeEach('create a comment', async ({ request }) => {
       commentData = prepareCommentPayload(articleId)
-      responseComment = await request.post(apiLinks.commentsUrl, {
+      responseComment = await request.post(apiUrls.commentsUrl, {
         headers,
         data: commentData,
       })
@@ -65,7 +62,7 @@ test.describe('Verify comments CRUD operations @crud', () => {
       // await new Promise((resolve) => setTimeout(resolve, 5000))
       await expect(async () => {
         const responseCommentCreated = await request.get(
-          `${apiLinks.commentsUrl}/${commentJson.id}`,
+          `${apiUrls.commentsUrl}/${commentJson.id}`,
         )
         const expectedStatusCode = 200
         expect(
@@ -97,7 +94,7 @@ test.describe('Verify comments CRUD operations @crud', () => {
       const comment = await responseComment.json()
 
       const responseCommentDeleted = await request.delete(
-        `${apiLinks.commentsUrl}/${comment.id}`,
+        `${apiUrls.commentsUrl}/${comment.id}`,
         { headers },
       )
 
@@ -111,7 +108,7 @@ test.describe('Verify comments CRUD operations @crud', () => {
       const expectedStatusDeletedComment = 404
 
       const responseCommentDeletedGet = await request.get(
-        `${apiLinks.commentsUrl}/${comment.id}`,
+        `${apiUrls.commentsUrl}/${comment.id}`,
         { headers },
       )
       expect(
@@ -127,7 +124,7 @@ test.describe('Verify comments CRUD operations @crud', () => {
       const comment = await responseComment.json()
       // Act
       const responseCommentNotDeleted = await request.delete(
-        `${apiLinks.commentsUrl}/${comment.id}`,
+        `${apiUrls.commentsUrl}/${comment.id}`,
       )
       // Assert
       const actualResponseStatus = responseCommentNotDeleted.status()
@@ -139,7 +136,7 @@ test.describe('Verify comments CRUD operations @crud', () => {
       const expectedStatusNotDeletedComment = 200
 
       const responseCommentNotDeletedGet = await request.get(
-        `${apiLinks.commentsUrl}/${comment.id}`,
+        `${apiUrls.commentsUrl}/${comment.id}`,
       )
       expect(
         responseCommentNotDeletedGet.status(),
