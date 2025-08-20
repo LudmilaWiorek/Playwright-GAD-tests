@@ -1,5 +1,5 @@
 import { apiUrls } from '@_src/api/utils/api.util'
-import { expect, test } from '@playwright/test'
+import { expect, test } from '@_src/ui/fixtures/merge.fixture'
 
 test.describe('Verify comments API endpoints @GAD-R08-02 @smoke', () => {
   test.describe('verify each condition in separate test', () => {
