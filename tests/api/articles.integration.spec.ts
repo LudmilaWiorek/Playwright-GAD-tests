@@ -1,7 +1,8 @@
 import { prepareArticlePayload } from '@_src/api/factories/article-payload.api.factory'
 import { getAuthorizationHeader } from '@_src/api/factories/authorization-header.api.factory'
 import { ArticlePayload } from '@_src/api/models/article.api.model'
-import { Headers, apiUrls } from '@_src/api/utils/api.util'
+import { Headers } from '@_src/api/models/headers.api.model'
+import { apiUrls } from '@_src/api/utils/api.util'
 import { APIResponse, expect, test } from '@playwright/test'
 
 test.describe('Verify articles CRUD operations @crud ', () => {
