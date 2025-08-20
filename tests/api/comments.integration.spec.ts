@@ -1,4 +1,4 @@
-import { prepareArticlePayload } from '@_src/api/factories/article-payload.api.factory'
+import { createArticleWithApi } from '@_src/api/factories/article-create.api.factory'
 import { getAuthorizationHeader } from '@_src/api/factories/authorization-header.api.factory'
 import { prepareCommentPayload } from '@_src/api/factories/comment-payload.api.factory'
 import { CommentPayload } from '@_src/api/models/comment.api.model'
@@ -7,33 +7,16 @@ import { apiUrls } from '@_src/api/utils/api.util'
 import { APIResponse, expect, test } from '@playwright/test'
 
 test.describe('Verify comments CRUD operations @crud', () => {
-  let headers: Headers
   let articleId: number
+  let headers: Headers
 
   test.beforeAll('create an article', async ({ request }) => {
     headers = await getAuthorizationHeader(request)
-    const articleData = prepareArticlePayload() // import function from api.utils
 
-    const responseArticle = await request.post(apiUrls.articlesUrl, {
-      headers,
-      data: articleData,
-    })
+    const responseArticle = await createArticleWithApi(request, headers)
 
     const article = await responseArticle.json()
-    // let's get article id, that we'll need to verify adding comment later to
     articleId = article.id
-
-    const expectedStatusCode = 200
-    // assert article just in case
-    await expect(async () => {
-      const responseArticleCreated = await request.get(
-        `${apiUrls.articlesUrl}/${articleId}`,
-      )
-      expect(
-        responseArticleCreated.status(),
-        `Expected status: ${expectedStatusCode} and observed: ${responseArticleCreated}`,
-      ).toBe(expectedStatusCode)
-    }).toPass()
   })
 
   test('should not create a comment without a logged-in user @GAD-R08-04', async ({

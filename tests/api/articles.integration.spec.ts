@@ -1,3 +1,4 @@
+import { createArticleWithApi } from '@_src/api/factories/article-create.api.factory'
 import { prepareArticlePayload } from '@_src/api/factories/article-payload.api.factory'
 import { getAuthorizationHeader } from '@_src/api/factories/authorization-header.api.factory'
 import { ArticlePayload } from '@_src/api/models/article.api.model'
@@ -12,8 +13,7 @@ test.describe('Verify articles CRUD operations @crud ', () => {
     // Arrange
     const expectedStatusCode = 401
 
-    const articleData = prepareArticlePayload() // import function from api.utils
-
+    const articleData = prepareArticlePayload()
     const response = await request.post(apiUrls.articlesUrl, {
       data: articleData,
     })
@@ -31,27 +31,12 @@ test.describe('Verify articles CRUD operations @crud ', () => {
     })
 
     test.beforeEach('create an article', async ({ request }) => {
-      // make operation of creating
-      //Act
       articleData = prepareArticlePayload()
-      responseArticle = await request.post(apiUrls.articlesUrl, {
+      responseArticle = await createArticleWithApi(
+        request,
         headers,
-        data: articleData,
-      })
-
-      //assert article exists
-      const articleJson = await responseArticle.json()
-
-      await expect(async () => {
-        const responseArticleCreated = await request.get(
-          `${apiUrls.articlesUrl}/${articleJson.id}`,
-        )
-        const expectedStatusCode = 200
-        expect(
-          responseArticleCreated.status(),
-          `Expected status: ${expectedStatusCode} and observed: ${responseArticleCreated.status()}`,
-        ).toBe(expectedStatusCode) // if that assert will fail, function will repeat all steps
-      }).toPass({ timeout: 2_000 }) //  add steps in function, and assert, and we want it to end successfully; timeout 2s says playwright has 2 sec to finish operations here, not 60, like we have in playwrightconfig.
+        articleData,
+      )
     })
 
     // CREATE
