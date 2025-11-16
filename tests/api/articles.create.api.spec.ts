@@ -28,7 +28,7 @@ test.describe('Verify articles create operations @crud @create @api @article', (
     })
 
     // CREATE
-    test('should create an article with logged-in user @GAD-R08-03', async ({
+    test('should create an article with logged-in user @GAD-R09-01', async ({
       request,
     }) => {
       // verify if operation from beforeEach succeed

@@ -32,7 +32,7 @@ test.describe('Verify comments create operations @crud @create @api @comment', (
     expect(response.status()).toBe(expectedStatusCode)
   })
 
-  test('should create a comment with logged-in user @GAD-R09-04', async ({
+  test('should create a comment with logged-in user @GAD-R09-02', async ({
     request,
   }) => {
     //Arrange

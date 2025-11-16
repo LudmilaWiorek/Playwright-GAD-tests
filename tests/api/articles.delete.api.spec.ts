@@ -20,7 +20,7 @@ test.describe('Verify articles DELETE operations @crud @article @api', () => {
     articleData = prepareArticlePayload()
     responseArticle = await createArticleWithApi(request, headers, articleData)
   })
-  test('should delete an article with logged-in user @GAD-R08-05', async ({
+  test('should delete an article with logged-in user @GAD-R09-03', async ({
     request,
   }) => {
     // await new Promise((resolve) => setTimeout(resolve, 5000)) // huge technical debt!!! we will work on this in future :)
@@ -53,7 +53,7 @@ test.describe('Verify articles DELETE operations @crud @article @api', () => {
     )
   })
 
-  test('should not delete an article with non logged-in user @GAD-R08-05', async ({
+  test('should not delete an article with non logged-in user @GAD-R09-03', async ({
     request,
   }) => {
     //Arrange

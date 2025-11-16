@@ -53,7 +53,7 @@ test.describe('Verify comments DELETE operations @crud @article @api @delete', (
       headers,
     )
   })
-  test('should not delete a comment with a non logged-in user @GAD-R09-06', async ({
+  test('should not delete a comment with a non logged-in user @GAD-R09-04', async ({
     request,
   }) => {
     // Arrange
