@@ -53,5 +53,34 @@ test.describe('Verify articles create operations @crud @create @api @article', (
       expect.soft(articleJson.title).toEqual(articleData.title)
       expect.soft(articleJson.body).toEqual(articleData.body)
     })
+
+    test('should create new article when modified id not exists with logged-in user @GAD-R10-01', async ({
+      request,
+    }) => {
+      //Arrange
+      const expectedStatusCode = 201
+      const articleData = prepareArticlePayload()
+
+      //Act
+      const responseArticlePut = await request.put(
+        `${apiUrls.articlesUrl}/${new Date().valueOf()}`,
+        {
+          headers,
+          data: articleData,
+        },
+      )
+
+      //Assert
+      const actualResponseStatus = responseArticlePut.status()
+      expect(
+        actualResponseStatus,
+        `expect status code ${expectedStatusCode}, and received ${actualResponseStatus}`,
+      ).toBe(expectedStatusCode)
+
+      const articleJson = await responseArticlePut.json()
+
+      expect.soft(articleJson.title).toEqual(articleData.title)
+      expect.soft(articleJson.body).toEqual(articleData.body)
+    })
   })
 })
