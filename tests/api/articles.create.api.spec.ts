@@ -6,7 +6,7 @@ import { apiUrls } from '@_src/api/utils/api.util'
 import { expect, test } from '@playwright/test'
 
 test.describe('Verify articles create operations @crud @create @api @article', () => {
-  test('should not create an article without a logged-in user @GAD-R08-03', async ({
+  test('should not create an article without a logged-in user @GAD-R09-01', async ({
     request,
   }) => {
     // Arrange

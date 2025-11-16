@@ -24,7 +24,7 @@ test.describe('Verify comments DELETE operations @crud @article @api @delete', (
     responseComment = await createCommentWithApi(request, headers, articleId)
   })
 
-  test('should delete comment with a logged-in user @GAD-R08-06', async ({
+  test('should delete comment with a logged-in user @GAD-R09-04', async ({
     request,
   }) => {
     const expectedStatusCode = 200
@@ -53,7 +53,7 @@ test.describe('Verify comments DELETE operations @crud @article @api @delete', (
       headers,
     )
   })
-  test('should not delete a comment with a non logged-in user @GAD-R08-06', async ({
+  test('should not delete a comment with a non logged-in user @GAD-R09-06', async ({
     request,
   }) => {
     // Arrange
