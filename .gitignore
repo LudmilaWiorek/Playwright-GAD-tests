@@ -5,3 +5,7 @@ node_modules/
 .env
 tmp/*
 !tmp/.gitkeep
+
+# Playwright
+/blob-report/
+/playwright/.auth/
